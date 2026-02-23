@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROOTED — Artifact Details</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* CORE VARIABLES & RESETS */
+        :root {
+            --earth-brown: #5C4033; --deep-earth: #3D2817; --off-white: #F5F1E8;
+            --pure-white: #FFFFFF; --accent-gold: #D4A574;
+            --border-light: rgba(245, 241, 232, 0.15); --border-dark: rgba(61, 40, 23, 0.2);
+            --font-primary: 'Inter', sans-serif; --font-tech: 'Space Mono', monospace;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+        body { background-color: var(--off-white); color: var(--deep-earth); font-family: var(--font-primary); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+        a { text-decoration: none; color: inherit; }
+        button, textarea { font-family: inherit; }
+
+        .global-grain { position: fixed; inset: 0; pointer-events: none; z-index: 9999; background-image: url('https://upload.wikimedia.org/wikipedia/commons/7/76/Noise_grain.png'); opacity: 0.05; animation: grainMove 1s steps(2) infinite; }
+        @keyframes grainMove { 0%, 100% { transform: translate(0,0); } 50% { transform: translate(-5%, -5%); } }
+
+        /* HEADER */
+        .elite-header { position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; background: rgba(61, 40, 23, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-light); }
+        .main-nav { display: grid; grid-template-columns: 1fr auto 1fr; height: 75px; }
+        .nav-compartment { display: flex; align-items: center; padding: 0 2.5rem; }
+        .nav-left { justify-content: flex-start; gap: 2rem; border-right: 1px solid var(--border-light); }
+        .nav-center { justify-content: center; padding: 0 4rem; }
+        .nav-right { justify-content: flex-end; border-left: 1px solid var(--border-light); }
+        .nav-icon-link { color: var(--off-white); display: flex; align-items: center; justify-content: center; transition: 0.3s ease; cursor: pointer; }
+        .nav-icon-link:hover { color: var(--accent-gold); transform: scale(1.1); }
+        .nav-logo-lockup { display: flex; flex-direction: column; align-items: center; }
+        .logo-main { font-weight: 900; font-size: 1.5rem; letter-spacing: 0.25em; line-height: 1; margin-right: -0.25em; color: var(--off-white); }
+        .logo-sub { font-weight: 700; font-size: 0.45rem; letter-spacing: 0.4em; color: var(--accent-gold); margin-top: 4px; }
+
+        /* SPLIT LAYOUT */
+        .product-container { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; max-width: 1400px; margin: 0 auto; padding: 140px 5% 6rem; min-height: 100vh; }
+        .p-gallery { width: 100%; aspect-ratio: 4/5; background: #EAE6DD; position: relative; overflow: hidden; border: 1px solid var(--border-dark); }
+        .gallery-img { width: 100%; height: 100%; object-fit: cover; filter: sepia(0.05) grayscale(0.1) brightness(0.95); }
+        
+        .p-details-wrapper { display: flex; flex-direction: column; justify-content: flex-start; }
+        .back-link { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-tech); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.2em; color: var(--deep-earth); opacity: 0.5; margin-bottom: 2rem; transition: 0.3s; border-bottom: 1px solid transparent; }
+        .back-link:hover { opacity: 1; color: var(--accent-gold); border-color: var(--accent-gold); transform: translateX(-5px); }
+
+        .p-meta { font-family: var(--font-tech); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.15em; color: var(--accent-gold); margin-bottom: 1rem; display: flex; align-items: center; gap: 10px; }
+        .p-meta::before { content: ''; width: 25px; height: 1px; background: var(--accent-gold); }
+        .p-title { font-size: clamp(2.5rem, 4vw, 3.5rem); font-weight: 900; line-height: 0.95; letter-spacing: -0.03em; text-transform: uppercase; margin-bottom: 1rem; color: var(--deep-earth); }
+        .p-price { font-size: 1.5rem; font-weight: 800; letter-spacing: 0.05em; margin-bottom: 2rem; font-family: var(--font-tech); color: var(--deep-earth); }
+        .p-desc { font-size: 0.95rem; line-height: 1.7; opacity: 0.8; margin-bottom: 3rem; color: var(--deep-earth); max-width: 500px;}
+
+        /* SIZING ENGINE */
+        .size-selector { margin-bottom: 2rem; }
+        .s-label { font-family: var(--font-tech); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.2em; margin-bottom: 1rem; display: flex; justify-content: space-between; color: var(--deep-earth); }
+        .size-grid { display: flex; gap: 10px; flex-wrap: wrap; }
+        .size-btn { background: transparent; border: 1px solid var(--border-dark); color: var(--deep-earth); font-family: var(--font-tech); font-weight: 700; font-size: 0.85rem; width: 55px; height: 55px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s; }
+        .size-btn:hover { border-color: var(--deep-earth); }
+        .size-btn.active { background: var(--deep-earth); color: var(--off-white); border-color: var(--deep-earth); }
+
+        /* ACTION ROW */
+        .action-row { display: flex; gap: 1rem; margin-bottom: 4rem; height: 70px; }
+        .qty-wrapper { display: flex; align-items: center; justify-content: space-between; border: 1px solid var(--deep-earth); width: 130px; padding: 0 1rem; font-family: var(--font-tech); font-weight: 700; color: var(--deep-earth); }
+        .qty-btn { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--deep-earth); transition: 0.3s; }
+        .qty-btn:hover { color: var(--accent-gold); }
+
+        .cyber-btn { position: relative; flex-grow: 1; display: flex; height: 100%; background: var(--deep-earth); border: 1px solid var(--deep-earth); cursor: pointer; overflow: hidden; }
+        .cyber-bg { position: absolute; inset: 0; background: var(--accent-gold); transform: scaleY(0); transform-origin: bottom; transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1); z-index: 1; }
+        .cyber-text-wrap { position: relative; z-index: 2; width: 100%; height: 100%; display: flex; flex-direction: column; transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1); }
+        .cyber-text-row { height: 70px; display: flex; align-items: center; justify-content: center; gap: 15px; font-weight: 800; font-size: 0.85rem; letter-spacing: 0.2em; color: var(--off-white); flex-shrink: 0; }
+        .cyber-text-row.hover-text { color: var(--deep-earth); }
+        .cyber-btn:hover .cyber-bg { transform: scaleY(1); }
+        .cyber-btn:hover .cyber-text-wrap { transform: translateY(-70px); }
+
+        /* ATELIER */
+        .atelier-box { background: rgba(61, 40, 23, 0.03); border: 1px solid var(--border-dark); padding: 2.5rem; margin-top: auto; }
+        .a-title { font-family: var(--font-tech); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.2em; color: var(--deep-earth); margin-bottom: 1rem; display: flex; align-items: center; gap: 10px; }
+        .a-title svg { color: var(--accent-gold); }
+        .a-desc { font-size: 0.85rem; line-height: 1.6; opacity: 0.7; margin-bottom: 1.5rem; color: var(--deep-earth); }
+        .bespoke-input { width: 100%; background: transparent; border: 1px solid var(--border-dark); color: var(--deep-earth); font-family: var(--font-primary); font-size: 0.85rem; padding: 1rem; margin-bottom: 1.5rem; resize: vertical; min-height: 80px; }
+        .bespoke-input:focus { outline: none; border-color: var(--deep-earth); }
+        .bespoke-btn { background: var(--deep-earth); color: var(--off-white); border: none; font-family: var(--font-tech); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.15em; padding: 1rem 1.5rem; cursor: pointer; transition: 0.3s; width: 100%; display: flex; justify-content: center; align-items: center; gap: 10px; }
+        .bespoke-btn:hover { background: var(--accent-gold); color: var(--deep-earth); }
+
+        /* ELITE FOOTER CSS (ADDED FOR CONSISTENCY) */
+        .elite-footer { background-color: var(--deep-earth); color: var(--off-white); position: relative; overflow: hidden; border-top: 1px solid var(--border-light); padding: 8rem 5% 2rem; }
+        .footer-watermark { position: absolute; bottom: -8%; left: 50%; transform: translateX(-50%); font-family: var(--font-primary); font-size: clamp(10rem, 25vw, 30rem); font-weight: 900; color: rgba(245, 241, 232, 0.02); line-height: 0.8; white-space: nowrap; pointer-events: none; z-index: 1; letter-spacing: -0.05em; }
+        .footer-container { position: relative; z-index: 10; max-width: 1600px; margin: 0 auto; }
+        .f-newsletter { max-width: 600px; margin-bottom: 6rem; }
+        .f-n-label { font-family: var(--font-tech); font-size: 0.75rem; color: var(--accent-gold); letter-spacing: 0.2em; margin-bottom: 1rem; display: block; }
+        .f-n-title { font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1; margin-bottom: 2rem; }
+        .f-form { display: flex; position: relative; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 0.5rem; }
+        .f-form::after { content: ''; position: absolute; bottom: -1px; left: 0; width: 0%; height: 2px; background: var(--accent-gold); transition: width 0.4s ease; }
+        .f-form:focus-within::after { width: 100%; }
+        .f-input { flex: 1; background: transparent; border: none; color: var(--off-white); font-family: var(--font-primary); font-size: 1rem; font-weight: 500; outline: none; padding: 0.5rem 0; letter-spacing: 0.1em; }
+        .f-input::placeholder { color: rgba(255,255,255,0.3); }
+        .f-submit { background: transparent; border: none; color: var(--off-white); font-size: 1.5rem; cursor: pointer; transition: color 0.3s, transform 0.3s; }
+        .f-submit:hover { color: var(--accent-gold); transform: translateX(5px); }
+
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 4rem; margin-bottom: 6rem; border-top: 1px solid var(--border-dark); padding-top: 4rem; }
+        .f-col { display: flex; flex-direction: column; gap: 1.5rem; }
+        .f-col-title { font-family: var(--font-tech); font-size: 0.7rem; font-weight: 700; color: var(--accent-gold); letter-spacing: 0.2em; margin-bottom: 0.5rem; }
+        .f-link { font-size: 0.85rem; font-weight: 500; letter-spacing: 0.1em; opacity: 0.7; transition: opacity 0.3s, transform 0.3s, color 0.3s; width: fit-content; }
+        .f-link:hover { opacity: 1; color: var(--accent-gold); transform: translateX(5px); }
+        .f-text { font-family: var(--font-tech); font-size: 0.75rem; line-height: 1.8; opacity: 0.6; letter-spacing: 0.1em; }
+
+        .footer-bottom { display: flex; justify-content: space-between; align-items: flex-end; border-top: 1px solid var(--border-dark); padding-top: 2rem; font-family: var(--font-tech); font-size: 0.65rem; letter-spacing: 0.15em; opacity: 0.6; }
+        .ascend-btn { background: transparent; border: none; color: var(--off-white); font-family: var(--font-tech); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.2em; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 1rem; transition: color 0.3s; outline: none; }
+        .ascend-line { width: 1px; height: 40px; background: var(--off-white); transition: height 0.4s ease, background 0.3s; }
+        .ascend-btn:hover { color: var(--accent-gold); }
+        .ascend-btn:hover .ascend-line { height: 60px; background: var(--accent-gold); }
+
+
+        /* CART */
+        .cart-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 9998; opacity: 0; pointer-events: none; transition: 0.4s; }
+        .cart-overlay.open { opacity: 1; pointer-events: all; }
+        .cart-drawer { position: fixed; top: 0; right: 0; width: 450px; height: 100vh; background: var(--deep-earth); color: var(--off-white); border-left: 1px solid var(--accent-gold); z-index: 9999; transform: translateX(100%); transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1); display: flex; flex-direction: column; }
+        .cart-drawer.open { transform: translateX(0); }
+        .cart-header { padding: 2rem; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: center; }
+        .c-title { font-family: var(--font-tech); font-size: 0.85rem; font-weight: 700; letter-spacing: 0.2em; color: var(--off-white); }
+        .close-cart { background: none; border: none; color: var(--off-white); cursor: pointer; font-size: 2rem; line-height: 1; transition: 0.3s;}
+        .close-cart:hover { color: var(--accent-gold); }
+        .cart-items { flex-grow: 1; padding: 2rem; overflow-y: auto; display: flex; flex-direction: column; gap: 1.5rem; }
+        .cart-item { display: grid; grid-template-columns: 90px 1fr; gap: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 1.5rem; }
+        .ci-img { width: 100%; aspect-ratio: 4/5; object-fit: cover; background: #EAE6DD; }
+        .ci-details { display: flex; flex-direction: column; justify-content: space-between; }
+        .ci-name { font-weight: 800; font-size: 0.9rem; letter-spacing: 0.05em; color: var(--off-white); text-transform: uppercase; }
+        .ci-meta { font-family: var(--font-tech); font-size: 0.65rem; color: var(--accent-gold); letter-spacing: 0.1em; margin-top: 5px; display: block;}
+        .ci-price { font-family: var(--font-tech); font-size: 0.9rem; font-weight: 700; color: var(--off-white); margin-top: 10px;}
+        .remove-item { background: none; border: none; color: rgba(255,255,255,0.4); font-family: var(--font-tech); font-size: 0.6rem; letter-spacing: 0.1em; cursor: pointer; text-align: left; margin-top: auto; transition: 0.3s;}
+        .remove-item:hover { color: #ff4d4d; }
+        .cart-footer { padding: 2rem; border-top: 1px solid rgba(255,255,255,0.1); background: var(--deep-earth); }
+        .cart-total { display: flex; justify-content: space-between; font-family: var(--font-tech); font-size: 1.2rem; font-weight: 700; color: var(--off-white); margin-bottom: 1.5rem; }
+        .checkout-btn { background: var(--off-white); color: var(--deep-earth); width: 100%; border: none; height: 65px; font-family: var(--font-primary); font-weight: 800; letter-spacing: 0.15em; font-size: 0.85rem; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 10px; transition: 0.3s; text-decoration: none;}
+        .checkout-btn:hover { background: var(--accent-gold); }
+
+        /* RESPONSIVE */
+        @media (max-width: 1024px) { 
+            .product-container { gap: 3rem; padding: 120px 5% 4rem; } 
+            .footer-grid { grid-template-columns: 1fr 1fr; gap: 3rem; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-logo-lockup { transform: scale(0.85); }
+            .product-container { grid-template-columns: 1fr; gap: 2.5rem; padding-top: 100px; }
+            .p-gallery { aspect-ratio: auto; height: 60vh; }
+            .p-title { font-size: 2.5rem; }
+            .action-row { flex-direction: column; height: auto; gap: 1rem; }
+            .qty-wrapper { width: 100%; height: 60px; }
+            .cyber-btn { height: 70px; }
+            .cart-drawer { width: 100%; border-left: none; }
+
+            .elite-footer { padding: 4rem 1.5rem 2rem; }
+            .footer-watermark { display: none; } 
+            .f-n-title { font-size: 2.5rem; }
+            .footer-grid { grid-template-columns: 1fr; gap: 3rem; }
+            .footer-bottom { flex-direction: column; align-items: flex-start; gap: 2rem; }
+            .ascend-btn { align-self: flex-end; margin-top: -50px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="global-grain"></div>
+
+    <header class="elite-header">
+        <nav class="main-nav">
+            <div class="nav-compartment nav-left">
+                <a href="index.html" class="nav-icon-link" aria-label="Home">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                </a>
+            </div>
+            <div class="nav-compartment nav-center">
+                <a href="index.html" class="nav-logo-lockup">
+                    <span class="logo-main">ROOTED</span>
+                    <span class="logo-sub">FAITH × CULTURE</span>
+                </a>
+            </div>
+            <div class="nav-compartment nav-right">
+                <div class="nav-icon-link" onclick="toggleCart()" aria-label="Cart">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line></svg>
+                    <span id="nav-cart-count" style="margin-left: 5px; font-family: var(--font-tech); font-size: 0.75rem;">[0]</span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="product-container" id="product-root">
+        </main>
+
+    <footer class="elite-footer">
+        <div class="footer-watermark">ROOTED</div>
+        <div class="footer-container">
+            <div class="f-newsletter">
+                <span class="f-n-label">SECURE ACCESS</span>
+                <h3 class="f-n-title">JOIN THE CLAN.</h3>
+                <form class="f-form" onsubmit="event.preventDefault(); alert('ACCESS GRANTED. CHECK INBOX.');">
+                    <input type="email" class="f-input" placeholder="ENTER SECURE EMAIL ADDRESS" required>
+                    <button type="submit" class="f-submit">→</button>
+                </form>
+            </div>
+            <div class="footer-grid">
+                <div class="f-col">
+                    <span class="f-col-title">HQ </span>
+                    <p class="f-text">IBADAN, NIGERIA<br>06°27'11"N 03°23'45"E</p>
+                    <p class="f-text" style="margin-top:1rem; color:var(--accent-gold);">FAITH × CULTURE</p>
+                </div>
+                <div class="f-col">
+                    <span class="f-col-title">EXPLORE</span>
+                    <a href="products.html" class="f-link">THE ARCHIVE</a>
+                    <a href="index.html#about" class="f-link">THE MOVEMENT</a>
+                    <a href="#" class="f-link">JOURNAL</a>
+                </div>
+                <div class="f-col">
+                    <span class="f-col-title">SUPPORT</span>
+                    <a href="#" class="f-link">SHIPPING & RETURNS</a>
+                    <a href="#" class="f-link">TERMS OF SERVICE</a>
+                    <a href="#" class="f-link">PRIVACY POLICY</a>
+                </div>
+                <div class="f-col">
+                    <span class="f-col-title">NETWORK</span>
+                    <a href="#" class="f-link">INSTAGRAM</a>
+                    <a href="#" class="f-link">TIKTOK</a>
+                    <a href="#" class="f-link">X (TWITTER)</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="copyright">© 2026 ROOTED STUDIO. ALL RIGHTS RESERVED.</div>
+                <button class="ascend-btn" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+                    <div class="ascend-line"></div>
+                    ASCEND
+                </button>
+            </div>
+        </div>
+    </footer>
+
+    <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+    <div class="cart-drawer" id="cartDrawer">
+        <div class="cart-header">
+            <span class="c-title">BUY NOW</span>
+            <button class="close-cart" onclick="toggleCart()">×</button>
+        </div>
+        <div class="cart-items" id="cart-items-container"></div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>TOTAL</span>
+                <span id="cart-total-price">₦0</span>
+            </div>
+            <a href="checkout.html" class="checkout-btn">PROCEED TO CHECKOUT →</a>
+        </div>
+    </div>
+
+    <script>
+        const db = [
+            { id: 'rt-001', name: 'THE COVENANT HOODIE', price: 45000, category: 'APPAREL', tech: '340GSM FRENCH TERRY', desc: 'An uncompromising blend of heavyweight French Terry and bold typographic declaration. Built to outlast the season, designed to anchor your identity in every room you enter.', sizes: ['S', 'M', 'L', 'XL', 'XXL'], images: ['https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?q=80&w=1200&auto=format&fit=crop'] },
+            { id: 'rt-002', name: 'HERITAGE TEE - ONYX', price: 25000, category: 'APPAREL', tech: 'VINTAGE WASH', desc: 'Heavyweight vintage wash. Featuring the ROOTED coordinate stamp on the spine.', sizes: ['S', 'M', 'L', 'XL', 'XXL'], images: ['https://images.unsplash.com/photo-1529139574466-a302d2d39ca2?q=80&w=1200&auto=format&fit=crop'] },
+            { id: 'rt-003', name: 'CULTURAL CARGO PANTS', price: 35000, category: 'BOTTOMS', tech: 'WOVEN TEXTILE', desc: 'Wide leg fit engineered for movement. Integrates traditional African weaving techniques.', sizes: ['28', '30', '32', '34', '36'], images: ['https://images.unsplash.com/photo-1584030373081-f37b7bb4fa8e?q=80&w=1200&auto=format&fit=crop'] },
+            { id: 'rt-004', name: 'BUILDER\'S CAP', price: 12000, category: 'HEADWEAR', tech: 'EARTH TONE COTTON', desc: 'Low profile dad hat. High density embroidered faith expression.', sizes: ['OSFA'], images: ['https://images.unsplash.com/photo-1588850561407-ed78c282e89b?q=80&w=1200&auto=format&fit=crop'] },
+            { id: 'rt-005', name: 'STRUCTURE TOTE', price: 15000, category: 'ACCESSORIES', tech: 'HEAVY CANVAS', desc: 'Designed to carry your laptop, your journal, and your legacy.', sizes: ['OSFA'], images: ['https://images.unsplash.com/photo-1597484661643-2f5fef640dd1?q=80&w=1200&auto=format&fit=crop'] },
+            { id: 'rt-006', name: 'THE GOSPEL TEE', price: 28000, category: 'EASTER CAPSULE', tech: 'OVERSIZED 240GSM', desc: 'Exclusive Easter allocation. Graphic depiction of the resurrection protocol.', sizes: ['S', 'M', 'L', 'XL', 'XXL'], images: ['https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=1200&auto=format&fit=crop'] },
+            { id: 'rt-007', name: 'FAITH NOIR TEE', price: 25000, category: 'EASTER CAPSULE', tech: 'PIGMENT DYED', desc: 'Dark, brooding, yet rooted in light. A structural masterpiece.', sizes: ['S', 'M', 'L', 'XL', 'XXL'], images: ['https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?q=80&w=1200&auto=format&fit=crop'] },
+            { id: 'rt-008', name: 'HERITAGE BLANC', price: 25000, category: 'EASTER CAPSULE', tech: 'RAW COTTON', desc: 'Undyed raw cotton featuring a minimalist crosshair back print.', sizes: ['S', 'M', 'L', 'XL', 'XXL'], images: ['https://images.unsplash.com/photo-1576566588028-4147f3842f27?q=80&w=1200&auto=format&fit=crop'] },
+            { id: 'rt-009', name: 'SCRIPTURE CORE', price: 28000, category: 'EASTER CAPSULE', tech: 'PUFF PRINT', desc: 'The exact verse that built the brand, printed in 3D high-density puff ink.', sizes: ['S', 'M', 'L', 'XL', 'XXL'], images: ['https://images.unsplash.com/photo-1503342394128-c104d54dba01?q=80&w=1200&auto=format&fit=crop'] },
+            { id: 'rt-010', name: 'ARCHIVE ESSENTIAL', price: 22000, category: 'EASTER CAPSULE', tech: 'EVERYDAY FIT', desc: 'The base layer for the modern believer.', sizes: ['S', 'M', 'L', 'XL', 'XXL'], images: ['https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?q=80&w=1200&auto=format&fit=crop'] }
+        ];
+
+        let currentProduct = null;
+        let selectedSize = null;
+        let currentQty = 1;
+        let cart = JSON.parse(localStorage.getItem('rooted_cart')) || [];
+
+        function initPage() {
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get('id') || 'rt-001'; 
+            currentProduct = db.find(p => p.id === id);
+            
+            if(!currentProduct) { 
+                document.getElementById('product-root').innerHTML = "<h1 style='grid-column: 1/-1; padding:150px 0; text-align:center;'>ARTIFACT NOT FOUND</h1>"; return; 
+            }
+
+            document.getElementById('product-root').innerHTML = `
+                <div class="p-gallery">
+                    <img src="${currentProduct.images[0]}" class="gallery-img" alt="${currentProduct.name}">
+                </div>
+                
+                <div class="p-details-wrapper">
+                    <a href="products.html" class="back-link">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                        RETURN TO ARCHIVE
+                    </a>
+                    
+                    <div class="p-meta">${currentProduct.id.toUpperCase()} // ${currentProduct.category}</div>
+                    <h1 class="p-title">${currentProduct.name}</h1>
+                    <div class="p-price">₦${currentProduct.price.toLocaleString()}</div>
+                    <p class="p-desc">${currentProduct.desc}</p>
+                    
+                    <div class="size-selector">
+                        <div class="s-label"><span>SELECT SPECIFICATION (SIZE)</span></div>
+                        <div class="size-grid">${currentProduct.sizes.map(size => `<button class="size-btn" onclick="selectSize(this, '${size}')">${size}</button>`).join('')}</div>
+                    </div>
+
+                    <div class="action-row">
+                        <div class="qty-wrapper">
+                            <button class="qty-btn" onclick="updateQty(-1)">-</button>
+                            <span id="qty-display">1</span>
+                            <button class="qty-btn" onclick="updateQty(1)">+</button>
+                        </div>
+                        <button class="cyber-btn" onclick="addToCart()">
+                            <div class="cyber-bg"></div>
+                            <div class="cyber-text-wrap">
+                                <div class="cyber-text-row">SECURE ARTIFACT</div>
+                                <div class="cyber-text-row hover-text">ADD TO BAG +</div>
+                            </div>
+                        </button>
+                    </div>
+
+                    <div class="atelier-box">
+                        <span class="a-title">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg> 
+                            ROOTED ATELIER // CUSTOM INQUIRY
+                        </span>
+                        <p class="a-desc">Require a specific colorway, bespoke sizing, or bulk order? Describe your vision below.</p>
+                        <textarea id="bespoke-request" class="bespoke-input" placeholder="E.g., I would like this piece in Navy Blue, Size XXXL."></textarea>
+                        <button class="bespoke-btn" onclick="initiateCustomization()">SUBMIT INQUIRY →</button>
+                    </div>
+                </div>
+            `;
+            updateCartUI();
+        }
+
+        function updateQty(change) {
+            currentQty += change;
+            if(currentQty < 1) currentQty = 1;
+            document.getElementById('qty-display').innerText = currentQty;
+        }
+
+        function selectSize(btn, size) {
+            document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            selectedSize = size;
+        }
+
+        function addToCart() {
+            if (!selectedSize) return alert("SYSTEM HALT: PLEASE SELECT A SIZE.");
+            
+            const existingItem = cart.find(item => item.id === currentProduct.id && item.size === selectedSize);
+            if(existingItem) {
+                existingItem.qty += currentQty;
+            } else {
+                cart.push({ ...currentProduct, size: selectedSize, qty: currentQty, cartId: Date.now() });
+            }
+            
+            localStorage.setItem('rooted_cart', JSON.stringify(cart));
+            updateCartUI();
+            toggleCart();
+            
+            currentQty = 1; 
+            document.getElementById('qty-display').innerText = 1;
+        }
+
+        function removeFromCart(cartId) {
+            cart = cart.filter(item => item.cartId !== cartId);
+            localStorage.setItem('rooted_cart', JSON.stringify(cart));
+            updateCartUI();
+        }
+
+        function toggleCart() {
+            document.getElementById('cartDrawer').classList.toggle('open');
+            document.getElementById('cartOverlay').classList.toggle('open');
+            document.body.style.overflow = document.getElementById('cartDrawer').classList.contains('open') ? 'hidden' : 'auto';
+        }
+
+        function updateCartUI() {
+            const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+            document.getElementById('nav-cart-count').innerText = `[${totalItems}]`;
+            
+            const container = document.getElementById('cart-items-container');
+            const totalEl = document.getElementById('cart-total-price');
+            
+            if(!container || !totalEl) return;
+
+            if (cart.length === 0) {
+                container.innerHTML = "<p style='font-family: var(--font-tech); opacity: 0.5; text-align: center; margin-top: 2rem;'>ARCHIVE IS EMPTY.</p>";
+                totalEl.innerText = "₦0";
+                return;
+            }
+
+            let total = 0;
+            container.innerHTML = cart.map(item => {
+                let itemTotal = item.price * item.qty;
+                total += itemTotal;
+                let imgSrc = (item.images && item.images[0]) ? item.images[0] : 'https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?w=800';
+
+                return `
+                    <div class="cart-item">
+                        <img src="${imgSrc}" class="ci-img" alt="${item.name}">
+                        <div class="ci-details">
+                            <div>
+                                <h4 class="ci-name">${item.name}</h4>
+                                <span class="ci-meta">SIZE: ${item.size} // QTY: ${item.qty}</span>
+                            </div>
+                            <div>
+                                <div class="ci-price">₦${itemTotal.toLocaleString()}</div>
+                                <button class="remove-item" onclick="removeFromCart(${item.cartId})">REMOVE [X]</button>
+                            </div>
+                        </div>
+                    </div>`;
+            }).join('');
+            
+            totalEl.innerText = `₦${total.toLocaleString()}`;
+        }
+
+        function initiateCustomization() {
+            const requestText = document.getElementById('bespoke-request').value;
+            if(!requestText) return alert("Please describe your request before submitting.");
+            const msg = `*ROOTED ATELIER INQUIRY*%0A%0A*Artifact:* ${currentProduct.name}%0A*Request:* ${requestText}%0A%0APlease advise on feasibility and pricing.`;
+            window.open(`https://wa.me/2349035010746?text=${msg}`, '_blank');
+        }
+
+        initPage();
+    </script>
+</body>
+</html>

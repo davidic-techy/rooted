@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROOTED — Cultural Streetwear</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* =========================================
+           1. CORE VARIABLES & RESETS
+           ========================================= */
+        :root {
+            --earth-brown: #5C4033;
+            --deep-earth: #3D2817;
+            --off-white: #F5F1E8;
+            --pure-white: #FFFFFF;
+            --accent-gold: #D4A574;
+            --border-light: rgba(245, 241, 232, 0.15);
+            --border-dark: rgba(61, 40, 23, 0.15);
+            --font-primary: 'Inter', sans-serif;
+            --font-tech: 'Space Mono', monospace;
+            --archived-grey: rgba(0, 0, 0, 0.4);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: var(--deep-earth); color: var(--off-white); font-family: var(--font-primary); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+        a { text-decoration: none; color: inherit; }
+        button { font-family: inherit; }
+
+        .global-grain { position: fixed; inset: 0; pointer-events: none; z-index: 9999; background-image: url('https://upload.wikimedia.org/wikipedia/commons/7/76/Noise_grain.png'); opacity: 0.05; animation: grainMove 1s steps(2) infinite; }
+        @keyframes grainMove { 0%, 100% { transform: translate(0,0); } 50% { transform: translate(-5%, -5%); } }
+
+        /* =========================================
+           2. ELITE HEADER & NAVIGATION
+           ========================================= */
+        .elite-header { position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; background: rgba(61, 40, 23, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-light); }
+        .utility-bar { display: grid; grid-template-columns: 1fr auto 1fr; padding: 0.6rem 2.5rem; border-bottom: 1px solid var(--border-light); font-size: 0.65rem; font-weight: 600; color: var(--accent-gold); letter-spacing: 0.15em; text-transform: uppercase; }
+        .util-left { text-align: left; opacity: 0.8;}
+        .util-center { text-align: center; color: var(--off-white); }
+        .util-right { text-align: right; }
+
+        .main-nav { display: grid; grid-template-columns: 1fr auto 1fr; height: 75px; }
+        .nav-compartment { display: flex; align-items: center; padding: 0 2.5rem; }
+        .nav-left { justify-content: flex-start; gap: 2rem; border-right: 1px solid var(--border-light); }
+        .nav-center { justify-content: center; padding: 0 4rem; }
+        .nav-right { justify-content: flex-end; border-left: 1px solid var(--border-light); }
+
+        .menu-trigger { background: none; border: none; cursor: pointer; display: flex; flex-direction: column; gap: 6px; }
+        .menu-line { width: 24px; height: 2px; background-color: var(--off-white); transition: 0.3s; }
+        
+        .nav-icon-link { color: var(--off-white); display: flex; align-items: center; justify-content: center; transition: color 0.3s ease, transform 0.3s ease; cursor: pointer; }
+        .nav-icon-link:hover { color: var(--accent-gold); transform: scale(1.1); }
+
+        .nav-logo-lockup { display: flex; flex-direction: column; align-items: center; }
+        .logo-main { font-weight: 900; font-size: 1.8rem; letter-spacing: 0.25em; line-height: 1; margin-right: -0.25em; color: var(--off-white); }
+        .logo-sub { font-weight: 700; font-size: 0.55rem; letter-spacing: 0.4em; color: var(--accent-gold); margin-top: 4px; }
+
+        /* =========================================
+           3. TIGHT & RESPONSIVE HERO
+           ========================================= */
+        .hero-architectural { padding-top: 110px; display: flex; align-items: center; justify-content: center; padding-bottom: 3rem; }
+        .hero-frame { width: 95%; max-width: 1600px; height: clamp(450px, 75vh, 700px); display: grid; grid-template-columns: 55% 45%; border: 1px solid var(--border-light); }
+        .hero-visual { position: relative; border-right: 1px solid var(--border-light); overflow: hidden; }
+        .hero-visual img { width: 100%; height: 100%; object-fit: cover; filter: sepia(0.1) grayscale(0.1) brightness(0.85); transition: transform 10s ease-out; }
+        .hero-visual:hover img { transform: scale(1.03); }
+
+        .hero-content-panel { display: flex; flex-direction: column; justify-content: center; background-color: var(--deep-earth); padding: 3rem 4rem; position: relative; }
+        .collection-badge { display: inline-block; font-size: 0.75rem; font-weight: 700; color: var(--accent-gold); letter-spacing: 0.2em; margin-bottom: 1.5rem; }
+        .hero-display { font-size: clamp(3rem, 5vw, 5.5rem); font-weight: 800; line-height: 0.95; letter-spacing: -0.03em; margin-bottom: 1.5rem; }
+        .hero-manifesto { font-size: 1rem; line-height: 1.6; opacity: 0.8; max-width: 400px; margin-bottom: 2.5rem; }
+
+        .cyber-btn { position: relative; display: flex; width: 100%; max-width: 350px; height: 65px; background: transparent; border: 1px solid rgba(255,255,255,0.2); cursor: pointer; overflow: hidden; text-decoration: none; }
+        .btn-corner { position: absolute; width: 8px; height: 8px; border: 1px solid var(--accent-gold); transition: border-color 0.4s; z-index: 3;}
+        .tl { top: -1px; left: -1px; border-right: none; border-bottom: none; }
+        .tr { top: -1px; right: -1px; border-left: none; border-bottom: none; }
+        .bl { bottom: -1px; left: -1px; border-right: none; border-top: none; }
+        .br { bottom: -1px; right: -1px; border-left: none; border-top: none; }
+        .cyber-bg { position: absolute; inset: 0; background: var(--off-white); transform: scaleY(0); transform-origin: bottom; transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1); z-index: 1; }
+        .cyber-text-wrap { position: relative; z-index: 2; width: 100%; height: 100%; display: flex; flex-direction: column; transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1); }
+        .cyber-text-row { height: 65px; display: flex; align-items: center; justify-content: center; gap: 15px; font-family: var(--font-tech); font-weight: 700; font-size: 0.8rem; letter-spacing: 0.2em; color: var(--off-white); flex-shrink: 0; }
+        .cyber-text-row.hover-text { color: var(--deep-earth); }
+        .cyber-btn:hover .cyber-bg { transform: scaleY(1); }
+        .cyber-btn:hover .cyber-text-wrap { transform: translateY(-65px); }
+        .cyber-btn:hover .btn-corner { border-color: var(--deep-earth); }
+        .cyber-btn:hover { border-color: transparent; }
+
+        /* =========================================
+           4. EASTER PRE-ORDER SHOWROOM (LIGHT)
+           ========================================= */
+        .easter-drop-section { background-color: var(--off-white); color: var(--deep-earth); padding: 8rem 5%; position: relative; border-bottom: 1px solid var(--border-light); }
+        .ed-container { max-width: 1600px; margin: 0 auto; }
+        .ed-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 4rem; gap: 4rem; border-bottom: 2px solid var(--border-dark); padding-bottom: 3rem; }
+        .ed-title-box { max-width: 700px; }
+        
+        .status-pulse { display: flex; align-items: center; gap: 10px; font-family: var(--font-tech); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.2em; color: var(--deep-earth); margin-bottom: 1.5rem; }
+        .pulse-dot { width: 8px; height: 8px; background: #25D366; border-radius: 50%; animation: pulseLight 1.5s infinite; }
+        @keyframes pulseLight { 0% { box-shadow: 0 0 0 0 rgba(37,211,102,0.4); } 70% { box-shadow: 0 0 0 10px rgba(37,211,102,0); } 100% { box-shadow: 0 0 0 0 rgba(37,211,102,0); } }
+
+        .ed-title { font-size: clamp(3rem, 6vw, 4.5rem); font-weight: 900; line-height: 0.9; letter-spacing: -0.03em; text-transform: uppercase; margin-bottom: 1.5rem; }
+        .ed-title span { color: var(--accent-gold); font-size: 0.45em; display: block; margin-top: 0.5rem; letter-spacing: 0.1em; }
+        .ed-desc { font-size: 1.05rem; line-height: 1.7; opacity: 0.8; max-width: 500px; }
+
+        .ed-countdown-box { display: flex; flex-direction: column; align-items: flex-end; }
+        .ed-cd-label { font-family: var(--font-tech); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.2em; margin-bottom: 1rem; color: var(--accent-gold); }
+        .countdown-wrapper { display: flex; gap: 1.5rem; align-items: baseline; font-family: var(--font-tech); }
+        .time-block { display: flex; flex-direction: column; align-items: center; width: 60px; }
+        .t-num { font-size: 3.5rem; font-weight: 700; color: var(--deep-earth); line-height: 1; }
+        .t-label { font-size: 0.65rem; letter-spacing: 0.2em; opacity: 0.6; margin-top: 5px; font-weight: 700;}
+        .t-sep { font-size: 2.5rem; color: var(--accent-gold); position: relative; top: -10px; }
+
+        .ed-mockups { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1.5rem; margin-bottom: 5rem; }
+        .mockup-card { display: flex; flex-direction: column; text-decoration: none; color: inherit; background: #fff; border: 1px solid var(--border-dark); transition: transform 0.4s ease, box-shadow 0.4s ease; }
+        .mockup-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(61,40,23,0.08); }
+        .mockup-visual { aspect-ratio: 3/4; background: #F0EBE1; position: relative; overflow: hidden; border-bottom: 1px solid var(--border-dark); display: flex; align-items: center; justify-content: center; }
+        .mockup-visual img { width: 80%; height: 80%; object-fit: contain; mix-blend-mode: multiply; filter: grayscale(0.8) contrast(1.1); transition: all 0.5s ease; }
+        .mockup-card:hover .mockup-visual img { filter: grayscale(0) contrast(1.1); transform: scale(1.05); }
+
+        .mockup-meta { padding: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem; background: var(--off-white); }
+        .m-id { font-family: var(--font-tech); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.15em; color: var(--accent-gold); }
+        .m-name { font-weight: 800; font-size: 1.1rem; letter-spacing: 0.05em; text-transform: uppercase; }
+        .m-action { font-family: var(--font-tech); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; opacity: 0.5; margin-top: 0.5rem; }
+
+        .ed-footer { display: flex; justify-content: center; }
+        .dark-btn { display: inline-flex; align-items: center; justify-content: space-between; width: 100%; max-width: 350px; background-color: var(--deep-earth); color: var(--off-white); padding: 1.4rem 2.5rem; font-size: 0.85rem; font-weight: 800; letter-spacing: 0.15em; transition: all 0.4s ease; border: 1px solid var(--deep-earth); position: relative; overflow: hidden; text-decoration: none; cursor: pointer; }
+        .dark-btn::before { content: ''; position: absolute; top: 0; left: 0; width: 0%; height: 100%; background-color: var(--accent-gold); transition: width 0.4s cubic-bezier(0.19, 1, 0.22, 1); z-index: 1; }
+        .dark-btn .btn-text, .dark-btn .btn-arrow { position: relative; z-index: 2; transition: color 0.4s; }
+        .dark-btn:hover::before { width: 100%; }
+        .dark-btn:hover .btn-text, .dark-btn:hover .btn-arrow { color: var(--deep-earth); }
+        .dark-btn:hover .btn-arrow { transform: translateX(8px); }
+
+        /* =========================================
+           5. ASYMMETRICAL EXHIBITION (LATEST REVELATIONS)
+           ========================================= */
+        .exhibition-section { background-color: var(--off-white); color: var(--deep-earth); padding: 4rem 5% 8rem; position: relative; }
+        .exhibition-header { max-width: 1400px; margin: 0 auto 3rem; position: relative; } 
+        .header-line { width: 100%; height: 2px; background: var(--deep-earth); margin-bottom: 1.5rem; }
+        .header-meta { display: flex; justify-content: space-between; font-weight: 800; font-size: 0.75rem; letter-spacing: 0.2em; color: var(--accent-gold); margin-bottom: 2rem; text-transform: uppercase; }
+        .exhibition-title { font-size: clamp(3rem, 6vw, 6rem); font-weight: 900; line-height: 0.9; letter-spacing: -0.04em; text-transform: uppercase; }
+
+        .exhibition-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 2rem; max-width: 1600px; margin: 0 auto; }
+        .item-hoodie { grid-column: 1 / 7; }
+        .item-tee { grid-column: 8 / 13; margin-top: 4rem; }
+        .item-pants { grid-column: 2 / 12; margin-top: 2rem; }
+        .item-cap { grid-column: 1 / 6; margin-top: 2rem; }
+        .item-tote { grid-column: 7 / 13; margin-top: -3rem; } 
+
+        .artifact-card { display: flex; flex-direction: column; text-decoration: none; color: inherit; }
+        .artifact-visual { position: relative; overflow: hidden; background: #e0dcd3; margin-bottom: 1rem; }
+        .item-hoodie .artifact-visual { aspect-ratio: 4/5; }
+        .item-tee .artifact-visual { aspect-ratio: 3/4; }
+        .item-pants .artifact-visual { aspect-ratio: 16/9; }
+        .item-cap .artifact-visual { aspect-ratio: 1/1; }
+        .item-tote .artifact-visual { aspect-ratio: 3/4; }
+        
+        .parallax-img { width: 100%; height: 100%; object-fit: cover; filter: sepia(0.1) grayscale(0.2) contrast(1.1); transition: transform 0.6s ease, filter 0.6s; }
+        .visual-mask { position: absolute; inset: 0; background: rgba(61, 40, 23, 0.9); display: flex; align-items: center; justify-content: center; transform: translateY(100%); transition: transform 0.4s ease; }
+        .mask-text { font-weight: 800; font-size: 1rem; letter-spacing: 0.2em; color: var(--off-white); opacity: 0; transform: translateY(10px); transition: all 0.3s ease 0.1s; }
+        
+        /* HOVER ONLY FOR ACTIVE LINKS */
+        a.artifact-card:hover .visual-mask { transform: translateY(0); }
+        a.artifact-card:hover .parallax-img { transform: scale(1.03); filter: none; }
+        a.artifact-card:hover .mask-text { opacity: 1; transform: translateY(0); color: var(--pure-white); }
+
+        .artifact-data { padding-top: 0.8rem; border-top: 1px solid var(--border-dark); }
+        .data-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
+        .a-sku { font-family: var(--font-tech); font-size: 0.7rem; letter-spacing: 0.15em; color: var(--accent-gold); }
+        .a-price { font-weight: 800; font-size: 1rem; letter-spacing: 0.05em; }
+        .a-name { font-size: 1.4rem; font-weight: 900; letter-spacing: -0.02em; margin-bottom: 0.3rem; text-transform: uppercase; }
+        .a-tech { font-family: var(--font-tech); font-size: 0.6rem; font-weight: 700; letter-spacing: 0.1em; opacity: 0.6; }
+
+        /* STATUS BADGING FOR ARCHIVED ITEMS */
+        .status-badge { position: absolute; top: 1rem; right: 1rem; font-family: var(--font-tech); font-size: 0.6rem; font-weight: 700; letter-spacing: 0.15em; padding: 4px 8px; z-index: 10; }
+        .badge-archived { background: var(--archived-grey); color: var(--off-white); }
+        
+        /* State for unavailable items */
+        .artifact-card.disabled { cursor: not-allowed; }
+        .artifact-card.disabled .parallax-img { filter: grayscale(1) opacity(0.7); }
+        .artifact-card.disabled .a-price { opacity: 0.4; }
+
+        .exhibition-footer { display: flex; justify-content: center; padding-top: 4rem; }
+
+        /* =========================================
+           6. HUD ARTIFACT SPOTLIGHT (Direct Checkout)
+           ========================================= */
+        .spotlight-section { background-color: var(--deep-earth); color: var(--off-white); padding: 8rem 5%; position: relative; border-top: 1px solid var(--border-light); display: flex; justify-content: center; }
+        .spotlight-container { width: 100%; max-width: 1600px; display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--border-light); background: rgba(255, 255, 255, 0.02); }
+
+        .spotlight-visual { position: relative; border-right: 1px solid var(--border-light); overflow: hidden; min-height: 700px; }
+        .spotlight-img { width: 100%; height: 100%; object-fit: cover; filter: sepia(0.2) grayscale(0.2) brightness(0.8); transition: transform 1.5s cubic-bezier(0.19, 1, 0.22, 1); }
+        .spotlight-visual:hover .spotlight-img { transform: scale(1.05); filter: sepia(0) grayscale(0) brightness(1); }
+
+        .hud-frame { position: absolute; inset: 1.5rem; border: 1px solid rgba(212, 165, 116, 0.2); z-index: 2; pointer-events: none; }
+        .crosshair { position: absolute; width: 15px; height: 15px; border: 1px solid var(--accent-gold); }
+        .hud-frame .tl { top: -1px; left: -1px; border-right: none; border-bottom: none; }
+        .hud-frame .tr { top: -1px; right: -1px; border-left: none; border-bottom: none; }
+        .hud-frame .bl { bottom: -1px; left: -1px; border-right: none; border-top: none; }
+        .hud-frame .br { bottom: -1px; right: -1px; border-left: none; border-top: none; }
+
+        .scan-line { position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: linear-gradient(to right, transparent, var(--accent-gold), transparent); opacity: 0.5; box-shadow: 0 0 10px var(--accent-gold); animation: scan 4s ease-in-out infinite; }
+        @keyframes scan { 0% { top: 0; opacity: 0; } 10% { opacity: 0.5; } 90% { opacity: 0.5; } 100% { top: 100%; opacity: 0; } }
+        .hud-status { position: absolute; bottom: 1rem; right: 1rem; font-family: var(--font-tech); font-size: 0.6rem; letter-spacing: 0.2em; color: var(--accent-gold); display: flex; align-items: center; gap: 8px; background: rgba(61, 40, 23, 0.8); padding: 5px 10px; }
+
+        .spotlight-content { padding: 6rem 4rem; display: flex; flex-direction: column; justify-content: center; }
+        .s-meta { font-family: var(--font-tech); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.2em; color: var(--accent-gold); margin-bottom: 2rem; display: flex; align-items: center; gap: 1rem; }
+        .s-meta::before { content: ''; display: block; width: 30px; height: 1px; background: var(--accent-gold); }
+        .s-title { font-size: clamp(3.5rem, 6vw, 6.5rem); font-weight: 900; line-height: 0.9; letter-spacing: -0.04em; color: var(--off-white); margin-bottom: 2rem; }
+        .s-desc { font-size: 1rem; line-height: 1.7; opacity: 0.7; max-width: 450px; margin-bottom: 3rem; }
+
+        .s-specs { list-style: none; padding: 0; margin-bottom: 3rem; border-top: 1px solid var(--border-light); }
+        .s-specs li { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; border-bottom: 1px solid var(--border-light); font-family: var(--font-tech); font-size: 0.7rem; letter-spacing: 0.1em; }
+        .spec-label { color: var(--accent-gold); font-weight: 700; }
+        .spec-value { opacity: 0.8; text-align: right; max-width: 60%; }
+
+        /* Direct Sizing on Homepage Spotlight */
+        .size-selector { margin-bottom: 3rem; }
+        .s-label { font-family: var(--font-tech); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.2em; margin-bottom: 1rem; display: block; color: var(--accent-gold); }
+        .size-grid { display: flex; gap: 10px; flex-wrap: wrap; }
+        .size-btn {
+            background: transparent; border: 1px solid var(--border-light); color: var(--off-white);
+            font-family: var(--font-tech); font-weight: 700; font-size: 0.85rem;
+            width: 50px; height: 50px; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+        .size-btn:hover { border-color: var(--accent-gold); color: var(--accent-gold); }
+        .size-btn.active { background: var(--accent-gold); color: var(--deep-earth); border-color: var(--accent-gold); }
+
+        .spotlight-btn { display: inline-flex; align-items: center; justify-content: space-between; width: 100%; max-width: 380px; height: 70px; background: transparent; border: 1px solid var(--off-white); color: var(--off-white); font-weight: 800; font-size: 0.85rem; letter-spacing: 0.2em; padding: 0 0 0 2rem; transition: all 0.4s ease; position: relative; overflow: hidden; text-decoration: none; cursor: pointer;}
+        .spotlight-btn::before { content: ''; position: absolute; top: 0; left: 0; width: 0%; height: 100%; background: var(--off-white); transition: width 0.4s cubic-bezier(0.19, 1, 0.22, 1); z-index: 1; }
+        .s-btn-text { position: relative; z-index: 2; transition: color 0.4s; }
+        .s-btn-icon { width: 70px; height: 100%; border-left: 1px solid var(--off-white); display: flex; align-items: center; justify-content: center; position: relative; z-index: 2; transition: all 0.4s; }
+        .spotlight-btn:hover { border-color: var(--off-white); }
+        .spotlight-btn:hover::before { width: 100%; }
+        .spotlight-btn:hover .s-btn-text { color: var(--deep-earth); }
+        .spotlight-btn:hover .s-btn-icon { border-color: var(--deep-earth); color: var(--deep-earth); transform: translateX(5px); }
+
+        /* =========================================
+           7. ELITE FOOTER ARCHITECTURE
+           ========================================= */
+        .elite-footer { background-color: var(--deep-earth); color: var(--off-white); position: relative; overflow: hidden; border-top: 1px solid var(--border-light); padding: 8rem 5% 2rem; }
+        .footer-watermark { position: absolute; bottom: -8%; left: 50%; transform: translateX(-50%); font-family: var(--font-primary); font-size: clamp(10rem, 25vw, 30rem); font-weight: 900; color: rgba(245, 241, 232, 0.02); line-height: 0.8; white-space: nowrap; pointer-events: none; z-index: 1; letter-spacing: -0.05em; }
+        .footer-container { position: relative; z-index: 10; max-width: 1600px; margin: 0 auto; }
+
+        .f-newsletter { max-width: 600px; margin-bottom: 6rem; }
+        .f-n-label { font-family: var(--font-tech); font-size: 0.75rem; color: var(--accent-gold); letter-spacing: 0.2em; margin-bottom: 1rem; display: block; }
+        .f-n-title { font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1; margin-bottom: 2rem; }
+        .f-form { display: flex; position: relative; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 0.5rem; }
+        .f-form::after { content: ''; position: absolute; bottom: -1px; left: 0; width: 0%; height: 2px; background: var(--accent-gold); transition: width 0.4s cubic-bezier(0.19, 1, 0.22, 1); }
+        .f-form:focus-within::after { width: 100%; }
+        .f-input { flex: 1; background: transparent; border: none; color: var(--off-white); font-family: var(--font-primary); font-size: 1rem; font-weight: 500; outline: none; padding: 0.5rem 0; letter-spacing: 0.1em; }
+        .f-input::placeholder { color: rgba(255,255,255,0.3); }
+        .f-submit { background: transparent; border: none; color: var(--off-white); font-size: 1.5rem; cursor: pointer; transition: color 0.3s, transform 0.3s; }
+        .f-submit:hover { color: var(--accent-gold); transform: translateX(5px); }
+
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 4rem; margin-bottom: 6rem; border-top: 1px solid var(--border-dark); padding-top: 4rem; }
+        .f-col { display: flex; flex-direction: column; gap: 1.5rem; }
+        .f-col-title { font-family: var(--font-tech); font-size: 0.7rem; font-weight: 700; color: var(--accent-gold); letter-spacing: 0.2em; margin-bottom: 0.5rem; }
+        .f-link { font-size: 0.85rem; font-weight: 500; letter-spacing: 0.1em; opacity: 0.7; transition: opacity 0.3s, transform 0.3s, color 0.3s; width: fit-content; }
+        .f-link:hover { opacity: 1; color: var(--accent-gold); transform: translateX(5px); }
+        .f-text { font-family: var(--font-tech); font-size: 0.75rem; line-height: 1.8; opacity: 0.6; letter-spacing: 0.1em; }
+
+        .footer-bottom { display: flex; justify-content: space-between; align-items: flex-end; border-top: 1px solid var(--border-dark); padding-top: 2rem; font-family: var(--font-tech); font-size: 0.65rem; letter-spacing: 0.15em; opacity: 0.6; }
+        .ascend-btn { background: transparent; border: none; color: var(--off-white); font-family: var(--font-tech); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.2em; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 1rem; transition: color 0.3s; outline: none; }
+        .ascend-line { width: 1px; height: 40px; background: var(--off-white); transition: height 0.4s ease, background 0.3s; }
+        .ascend-btn:hover { color: var(--accent-gold); }
+        .ascend-btn:hover .ascend-line { height: 60px; background: var(--accent-gold); }
+
+        /* Scroll Reveal Utility */
+        .reveal-elem { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+        .reveal-elem.is-visible { opacity: 1; transform: translateY(0); }
+
+        /* =========================================
+           8. GLOBAL CYBER CART CSS
+           ========================================= */
+        .cart-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 9998; opacity: 0; pointer-events: none; transition: 0.4s; }
+        .cart-overlay.open { opacity: 1; pointer-events: all; }
+        .cart-drawer { position: fixed; top: 0; right: 0; width: 450px; height: 100vh; background: var(--deep-earth); color: var(--off-white); border-left: 1px solid var(--accent-gold); z-index: 9999; transform: translateX(100%); transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1); display: flex; flex-direction: column; }
+        .cart-drawer.open { transform: translateX(0); }
+        .cart-header { padding: 2rem; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: center; }
+        .c-title { font-family: var(--font-tech); font-size: 0.85rem; font-weight: 700; letter-spacing: 0.2em; color: var(--off-white); }
+        .close-cart { background: none; border: none; color: var(--off-white); cursor: pointer; font-size: 2rem; line-height: 1; transition: 0.3s;}
+        .close-cart:hover { color: var(--accent-gold); }
+        .cart-items { flex-grow: 1; padding: 2rem; overflow-y: auto; display: flex; flex-direction: column; gap: 1.5rem; }
+        .cart-item { display: grid; grid-template-columns: 90px 1fr; gap: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 1.5rem; }
+        .ci-img { width: 100%; aspect-ratio: 4/5; object-fit: cover; background: #EAE6DD; }
+        .ci-details { display: flex; flex-direction: column; justify-content: space-between; }
+        .ci-name { font-weight: 800; font-size: 0.9rem; letter-spacing: 0.05em; color: var(--off-white); text-transform: uppercase; }
+        .ci-meta { font-family: var(--font-tech); font-size: 0.65rem; color: var(--accent-gold); letter-spacing: 0.1em; margin-top: 5px; display: block;}
+        .ci-price { font-family: var(--font-tech); font-size: 0.9rem; font-weight: 700; color: var(--off-white); margin-top: 10px;}
+        .remove-item { background: none; border: none; color: rgba(255,255,255,0.4); font-family: var(--font-tech); font-size: 0.6rem; letter-spacing: 0.1em; cursor: pointer; text-align: left; margin-top: auto; transition: 0.3s;}
+        .remove-item:hover { color: #ff4d4d; }
+        .cart-footer { padding: 2rem; border-top: 1px solid rgba(255,255,255,0.1); background: var(--deep-earth); }
+        .cart-total { display: flex; justify-content: space-between; font-family: var(--font-tech); font-size: 1.2rem; font-weight: 700; color: var(--off-white); margin-bottom: 1.5rem; }
+        .checkout-btn { background: var(--off-white); color: var(--deep-earth); width: 100%; border: none; height: 65px; font-family: var(--font-primary); font-weight: 800; letter-spacing: 0.15em; font-size: 0.85rem; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 10px; transition: 0.3s; text-decoration: none;}
+        .checkout-btn:hover { background: var(--accent-gold); }
+
+        /* =========================================
+           9. RESPONSIVE PERFECTION
+           ========================================= */
+        @media (max-width: 1024px) {
+            .hero-frame { grid-template-columns: 1fr 1fr; }
+            .nav-center { padding: 0 1rem; }
+            .util-left { display: none; }
+            .utility-bar { grid-template-columns: 1fr auto; justify-content: space-between; }
+            
+            .ed-header { flex-direction: column; align-items: flex-start; gap: 3rem; }
+            .ed-countdown-box { align-items: flex-start; }
+            .ed-mockups { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 2rem; gap: 2rem; }
+            .ed-mockups::-webkit-scrollbar { display: none; }
+            .mockup-card { min-width: 300px; scroll-snap-align: start; flex-shrink: 0; }
+
+            .item-hoodie { grid-column: 1 / 13; }
+            .item-tee { grid-column: 1 / 13; margin-top: 0; }
+            .item-pants { grid-column: 1 / 13; margin-top: 0; }
+            .item-cap { grid-column: 1 / 7; margin-top: 0; }
+            .item-tote { grid-column: 7 / 13; margin-top: 0; }
+            
+            .spotlight-container { grid-template-columns: 1fr; }
+            .spotlight-visual { min-height: 500px; border-right: none; border-bottom: 1px solid var(--border-light); }
+            .spotlight-content { padding: 4rem; }
+            
+            .footer-grid { grid-template-columns: 1fr 1fr; gap: 3rem; }
+        }
+
+        @media (max-width: 768px) {
+            .hide-mobile { display: none; }
+            .menu-trigger { display: none; } 
+            .main-nav { grid-template-columns: auto 1fr auto; padding: 0 1.5rem; }
+            .nav-compartment { padding: 0; border: none !important; }
+            .nav-logo-lockup { transform: scale(0.85); }
+            
+            .hero-architectural { padding-top: 100px; padding-bottom: 2rem; }
+            .hero-frame { grid-template-columns: 1fr; height: auto; border: none; }
+            .hero-visual { height: 45vh; border-right: none; border-bottom: 1px solid var(--border-light); }
+            .hero-content-panel { padding: 2rem 1.5rem; }
+            .hero-display { font-size: 2.8rem; margin-bottom: 1rem; }
+            .hero-manifesto { font-size: 0.95rem; margin-bottom: 2rem; }
+            .cyber-btn { max-width: 100%; }
+
+            .easter-drop-section { padding: 4rem 1.5rem; }
+            .ed-title { font-size: 2.8rem; }
+            .countdown-wrapper { gap: 0.8rem; justify-content: flex-start; width: 100%; }
+            .t-num { font-size: 2.5rem; }
+            .t-sep { font-size: 1.5rem; }
+            .mockup-card { min-width: 80vw; }
+            
+            .exhibition-section { padding: 3rem 1.5rem; }
+            .exhibition-title { font-size: 2.8rem; }
+            .exhibition-grid { display: flex; flex-direction: column; gap: 3rem; padding-bottom: 2rem; }
+            .artifact-visual { aspect-ratio: 4/5 !important; }
+
+            .spotlight-section { padding: 4rem 1.5rem; }
+            .spotlight-visual { height: 50vh; min-height: auto; }
+            .hud-frame { inset: 1rem; }
+            .spotlight-content { padding: 3rem 1.5rem; }
+            .s-title { font-size: 3rem; }
+            .s-specs li { flex-direction: column; align-items: flex-start; gap: 5px; }
+            .spec-value { text-align: left; max-width: 100%; }
+            .spotlight-btn { max-width: 100%; padding-left: 1.5rem; }
+            .s-btn-icon { width: 60px; }
+
+            .elite-footer { padding: 4rem 1.5rem 2rem; }
+            .footer-watermark { display: none; } 
+            .f-n-title { font-size: 2.5rem; }
+            .footer-grid { grid-template-columns: 1fr; gap: 3rem; }
+            .footer-bottom { flex-direction: column; align-items: flex-start; gap: 2rem; }
+            .ascend-btn { align-self: flex-end; margin-top: -50px; }
+            
+            .cart-drawer { width: 100%; border-left: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="global-grain"></div>
+
+    <header class="elite-header">
+        <div class="utility-bar">
+            <div class="util-left">DESIGNED IN LAGOS, NIGERIA</div>
+            <div class="util-center">COMPLIMENTARY SHIPPING ON COLLECTION 001</div>
+            <div class="util-right">
+                <a href="#" class="bag-link" onclick="toggleCart(); event.preventDefault();" style="color: inherit; text-decoration: none;">VIEW BAG</a>
+            </div>
+        </div>
+
+        <nav class="main-nav">
+            <div class="nav-compartment nav-left">
+                <button class="menu-trigger"><span class="menu-line"></span><span class="menu-line"></span></button>
+                <a href="products.html" class="nav-icon-link" aria-label="Shop Archive">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <path d="M16 10a4 4 0 0 1-8 0"></path>
+                    </svg>
+                </a>
+            </div>
+            <div class="nav-compartment nav-center">
+                <a href="index.html" class="nav-logo-lockup">
+                    <span class="logo-main">ROOTED</span>
+                    <span class="logo-sub">FAITH × CULTURE</span>
+                </a>
+            </div>
+            <div class="nav-compartment nav-right">
+                <div class="nav-icon-link" onclick="toggleCart()" aria-label="Cart">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                    </svg>
+                    <span id="nav-cart-count" style="margin-left: 5px; font-family: var(--font-tech); font-size: 0.75rem;">[0]</span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero-architectural">
+        <div class="hero-frame">
+            <div class="hero-visual">
+                <img src="https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?q=80&w=2000&auto=format&fit=crop" id="parallax-bg" alt="Rooted Campaign">
+            </div>
+            
+            <div class="hero-content-panel">
+                <div class="collection-badge">COLLECTION 001</div>
+                <h1 class="hero-display">WEAR<br>YOUR<br>FAITH.</h1>
+                <p class="hero-manifesto">Rooted exists to redefine how faith is represented in fashion. Modern, unapologetic, and deeply grounded in African heritage.</p>
+                
+                <a href="products.html" class="cyber-btn">
+                    <div class="btn-corner tl"></div><div class="btn-corner tr"></div>
+                    <div class="btn-corner bl"></div><div class="btn-corner br"></div>
+                    <div class="cyber-bg"></div>
+                    <div class="cyber-text-wrap">
+                        <div class="cyber-text-row">ENTER THE ARCHIVE</div>
+                        <div class="cyber-text-row hover-text">SHOP NOW <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-left: 5px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="easter-drop-section reveal-elem">
+        <div class="ed-container">
+            <div class="ed-header">
+                <div class="ed-title-box">
+                    <div class="status-pulse dark-pulse"><div class="pulse-dot"></div> PRE-ORDER OPEN</div>
+                    <h2 class="ed-title">THE RESURRECTION<br><span>EASTER DROP 001</span></h2>
+                    <p class="ed-desc">A highly curated capsule of 5 heavyweight graphic tees marking the Easter launch. Secure your allocation before the archive locks for production and final delivery.</p>
+                </div>
+                
+                <div class="ed-countdown-box">
+                    <span class="ed-cd-label">PRE-ORDER WINDOW CLOSES IN:</span>
+                    <div class="countdown-wrapper light-mode">
+                        <div class="time-block"><span class="t-num" id="cd-days">00</span><span class="t-label">DAYS</span></div><span class="t-sep">:</span>
+                        <div class="time-block"><span class="t-num" id="cd-hours">00</span><span class="t-label">HRS</span></div><span class="t-sep">:</span>
+                        <div class="time-block"><span class="t-num" id="cd-mins">00</span><span class="t-label">MIN</span></div><span class="t-sep">:</span>
+                        <div class="time-block"><span class="t-num" id="cd-secs">00</span><span class="t-label">SEC</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ed-mockups">
+                <a href="product.html?id=rt-006" class="mockup-card">
+                    <div class="mockup-visual">
+                        <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=800&auto=format&fit=crop" alt="Tee Mockup 1">
+                    </div>
+                    <div class="mockup-meta">
+                        <span class="m-id">CAPSULE 01</span>
+                        <h4 class="m-name">THE GOSPEL TEE</h4>
+                        <span class="m-action">PRE-ORDER ALLOCATION</span>
+                    </div>
+                </a>
+
+                <a href="product.html?id=rt-007" class="mockup-card">
+                    <div class="mockup-visual">
+                        <img src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?q=80&w=800&auto=format&fit=crop" alt="Tee Mockup 2">
+                    </div>
+                    <div class="mockup-meta">
+                        <span class="m-id">CAPSULE 02</span>
+                        <h4 class="m-name">FAITH NOIR TEE</h4>
+                        <span class="m-action">PRE-ORDER ALLOCATION</span>
+                    </div>
+                </a>
+
+                <a href="product.html?id=rt-008" class="mockup-card">
+                    <div class="mockup-visual">
+                        <img src="https://images.unsplash.com/photo-1576566588028-4147f3842f27?q=80&w=800&auto=format&fit=crop" alt="Tee Mockup 3">
+                    </div>
+                    <div class="mockup-meta">
+                        <span class="m-id">CAPSULE 03</span>
+                        <h4 class="m-name">HERITAGE BLANC</h4>
+                        <span class="m-action">PRE-ORDER ALLOCATION</span>
+                    </div>
+                </a>
+
+                <a href="product.html?id=rt-009" class="mockup-card">
+                    <div class="mockup-visual">
+                        <img src="https://images.unsplash.com/photo-1503342394128-c104d54dba01?q=80&w=800&auto=format&fit=crop" alt="Tee Mockup 4">
+                    </div>
+                    <div class="mockup-meta">
+                        <span class="m-id">CAPSULE 04</span>
+                        <h4 class="m-name">SCRIPTURE CORE</h4>
+                        <span class="m-action">PRE-ORDER ALLOCATION</span>
+                    </div>
+                </a>
+
+                <a href="product.html?id=rt-010" class="mockup-card">
+                    <div class="mockup-visual">
+                        <img src="https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?q=80&w=800&auto=format&fit=crop" alt="Tee Mockup 5">
+                    </div>
+                    <div class="mockup-meta">
+                        <span class="m-id">CAPSULE 05</span>
+                        <h4 class="m-name">ARCHIVE ESSENTIAL</h4>
+                        <span class="m-action">PRE-ORDER ALLOCATION</span>
+                    </div>
+                </a>
+            </div>
+
+            <div class="ed-footer">
+                <a href="products.html#easter" class="dark-btn">
+                    <span class="btn-text">PRE-ORDER COLLECTION</span>
+                    <span class="btn-arrow">→</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="exhibition-section" id="about">
+        <div class="exhibition-header reveal-elem">
+            <div class="header-line"></div>
+            <div class="header-meta">
+                <span></span>
+                <span>CURATED ARTIFACTS</span>
+            </div>
+            <h2 class="exhibition-title">LATEST<br>REVELATIONS</h2>
+        </div>
+
+        <div class="exhibition-grid">
+            
+            <div class="artifact-card item-hoodie disabled reveal-elem">
+                <div class="artifact-visual">
+                    <span class="status-badge badge-archived">COMING SOON</span>
+                    <img src="https://images.unsplash.com/photo-1578681994506-b8f463449011?q=80&w=1000&auto=format&fit=crop" class="parallax-img" alt="Covenant Hoodie">
+                    </div>
+                <div class="artifact-data">
+                    <div class="data-top"><span class="a-sku">CAT: APPAREL</span><span class="a-price">₦45,000</span></div>
+                    <h3 class="a-name">THE COVENANT HOODIE</h3>
+                    <p class="a-tech">340GSM FRENCH TERRY // BOLD DECLARATION</p>
+                </div>
+            </div>
+
+            <a href="product.html?id=rt-002" class="artifact-card item-tee reveal-elem">
+                <div class="artifact-visual">
+                    <img src="https://images.unsplash.com/photo-1529139574466-a302d2d39ca2?q=80&w=1000&auto=format&fit=crop" class="parallax-img" alt="Heritage Tee">
+                    <div class="visual-mask"><span class="mask-text">SHOP NOW</span></div>
+                </div>
+                <div class="artifact-data">
+                    <div class="data-top"><span class="a-sku">CAT: APPAREL</span><span class="a-price">₦25,000</span></div>
+                    <h3 class="a-name">HERITAGE TEE</h3>
+                    <p class="a-tech">VINTAGE WASH // STREET SILHOUETTE</p>
+                </div>
+            </a>
+
+            <div class="artifact-card item-pants disabled reveal-elem">
+                <div class="artifact-visual">
+                    <span class="status-badge badge-archived">COMING SOON</span>
+                    <img src="https://images.unsplash.com/photo-1584030373081-f37b7bb4fa8e?q=80&w=1500&auto=format&fit=crop" class="parallax-img" alt="African Trousers">
+                </div>
+                <div class="artifact-data">
+                    <div class="data-top"><span class="a-sku">CAT: BOTTOMS</span><span class="a-price">₦35,000</span></div>
+                    <h3 class="a-name">CULTURAL CARGO PANTS</h3>
+                    <p class="a-tech">WOVEN HERITAGE TEXTILE // WIDE LEG FIT</p>
+                </div>
+            </div>
+
+            <div class="artifact-card item-cap disabled reveal-elem">
+                <div class="artifact-visual">
+                    <span class="status-badge badge-archived">COMING SOON</span>
+                    <img src="https://images.unsplash.com/photo-1588850561407-ed78c282e89b?q=80&w=1000&auto=format&fit=crop" class="parallax-img" alt="Builder's Cap">
+                </div>
+                <div class="artifact-data">
+                    <div class="data-top"><span class="a-sku">CAT: HEADWEAR</span><span class="a-price">₦12,000</span></div>
+                    <h3 class="a-name">BUILDER'S CAP</h3>
+                    <p class="a-tech">EARTH TONE // EMBROIDERED IDENTITY</p>
+                </div>
+            </div>
+
+            <div class="artifact-card item-tote disabled reveal-elem">
+                <div class="artifact-visual">
+                    <span class="status-badge badge-archived">COMING SOON</span>
+                    <img src="https://images.unsplash.com/photo-1597484661643-2f5fef640dd1?q=80&w=1000&auto=format&fit=crop" class="parallax-img" alt="Structure Tote">
+                </div>
+                <div class="artifact-data">
+                    <div class="data-top"><span class="a-sku">CAT: ACCESSORIES</span><span class="a-price">₦15,000</span></div>
+                    <h3 class="a-name">STRUCTURE TOTE</h3>
+                    <p class="a-tech">HEAVY CANVAS // EVERYDAY CARRY</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="exhibition-footer reveal-elem" style="display: flex; justify-content: center; padding-top: 4rem;">
+            <a href="products.html" class="dark-btn">
+                <span class="btn-text">EXPLORE FULL ARCHIVE</span>
+                <span class="btn-arrow">→</span>
+            </a>
+        </div>
+    </section>
+
+    <section class="spotlight-section">
+        <div class="spotlight-container reveal-elem">
+            <div class="spotlight-visual">
+                <div class="hud-frame">
+                    <span class="crosshair tl"></span><span class="crosshair tr"></span>
+                    <span class="crosshair bl"></span><span class="crosshair br"></span>
+                    <div class="scan-line"></div>
+                    <div class="hud-status">
+                        <!-- <span class="pulse-dot" style="animation: pulseLight 1s infinite;"></span> TARGET ACQUIRED // 002 -->
+                    </div>
+                </div>
+                <img src="https://images.unsplash.com/photo-1529139574466-a302d2d39ca2?q=80&w=1200&auto=format&fit=crop" class="spotlight-img" alt="Heritage Tee Focus">
+            </div>
+
+            <div class="spotlight-content">
+                <div class="s-meta">FLAGSHIP SPOTLIGHT</div>
+                <h2 class="s-title">HERITAGE<br>TEE.</h2>
+                <p class="s-desc" style="margin-bottom: 2rem;">Heavyweight vintage wash featuring the ROOTED coordinate stamp on the spine. A structured silhouette built for the modern builder.</p>
+
+                <div class="size-selector">
+                    <span class="s-label">SELECT SPECIFICATION (SIZE)</span>
+                    <div class="size-grid">
+                        <button class="size-btn spot-size-btn" onclick="selectSpotlightSize(this, 'S')">S</button>
+                        <button class="size-btn spot-size-btn" onclick="selectSpotlightSize(this, 'M')">M</button>
+                        <button class="size-btn spot-size-btn" onclick="selectSpotlightSize(this, 'L')">L</button>
+                        <button class="size-btn spot-size-btn" onclick="selectSpotlightSize(this, 'XL')">XL</button>
+                        <button class="size-btn spot-size-btn" onclick="selectSpotlightSize(this, 'XXL')">XXL</button>
+                    </div>
+                </div>
+
+                <ul class="s-specs">
+                    <li><span class="spec-label">FABRIC WEIGHT</span><span class="spec-value">280GSM</span></li>
+                    <li><span class="spec-label">SILHOUETTE</span><span class="spec-value">RELAXED / BOXY</span></li>
+                    <li><span class="spec-label">TECHNIQUE</span><span class="spec-value">ACID WASH</span></li>
+                </ul>
+
+                <button class="spotlight-btn" onclick="addSpotlightToCart()">
+                    <span class="s-btn-text">BUY NOW</span>
+                    <div class="s-btn-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <footer class="elite-footer">
+        <div class="footer-watermark">ROOTED</div>
+        
+        <div class="footer-container">
+            <div class="f-newsletter reveal-elem">
+                <span class="f-n-label">SECURE ACCESS</span>
+                <h3 class="f-n-title">JOIN THE CLAN.</h3>
+                <form class="f-form" onsubmit="event.preventDefault(); alert('ACCESS GRANTED. CHECK INBOX.');">
+                    <input type="email" class="f-input" placeholder="ENTER SECURE EMAIL ADDRESS" required>
+                    <button type="submit" class="f-submit">→</button>
+                </form>
+            </div>
+
+            <div class="footer-grid reveal-elem">
+                <div class="f-col">
+                    <span class="f-col-title">HQ // COORD</span>
+                    <p class="f-text">LAGOS, NIGERIA<br>06°27'11"N 03°23'45"E</p>
+                    <p class="f-text" style="margin-top:1rem; color:var(--accent-gold);">FAITH × CULTURE</p>
+                </div>
+                <div class="f-col">
+                    <span class="f-col-title">EXPLORE</span>
+                    <a href="products.html" class="f-link">THE ARCHIVE</a>
+                    <a href="#about" class="f-link">THE MOVEMENT</a>
+                    <a href="#" class="f-link">JOURNAL</a>
+                </div>
+                <div class="f-col">
+                    <span class="f-col-title">SUPPORT</span>
+                    <a href="#" class="f-link">SHIPPING & RETURNS</a>
+                    <a href="#" class="f-link">TERMS OF SERVICE</a>
+                    <a href="#" class="f-link">PRIVACY POLICY</a>
+                </div>
+                <div class="f-col">
+                    <span class="f-col-title">NETWORK</span>
+                    <a href="#" class="f-link">INSTAGRAM</a>
+                    <a href="#" class="f-link">TIKTOK</a>
+                    <a href="#" class="f-link">X (TWITTER)</a>
+                </div>
+            </div>
+
+            <div class="footer-bottom reveal-elem">
+                <div class="copyright">© 2026 ROOTED STUDIO. ALL RIGHTS RESERVED.</div>
+                <button class="ascend-btn" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+                    <div class="ascend-line"></div>
+                    ASCEND
+                </button>
+            </div>
+        </div>
+    </footer>
+
+    <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+    <div class="cart-drawer" id="cartDrawer">
+        <div class="cart-header">
+            <span class="c-title">SECURE ARCHIVE</span>
+            <button class="close-cart" onclick="toggleCart()">×</button>
+        </div>
+        <div class="cart-items" id="cart-items-container">
+            </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>TOTAL</span>
+                <span id="cart-total-price">₦0</span>
+            </div>
+            <a href="checkout.html" class="checkout-btn">PROCEED TO CHECKOUT →</a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // Scroll Reveal Physics
+            const observerOptions = { root: null, rootMargin: '0px 0px -50px 0px', threshold: 0.1 };
+            const scrollObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target); 
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.reveal-elem').forEach(elem => {
+                scrollObserver.observe(elem);
+            });
+
+            // Parallax Effect for Hero
+            const hero = document.querySelector('.hero-architectural');
+            const bg = document.getElementById('parallax-bg');
+            if (hero && bg && window.innerWidth > 900) {
+                const centerX = window.innerWidth / 2;
+                const centerY = window.innerHeight / 2;
+                hero.addEventListener('mousemove', (e) => {
+                    requestAnimationFrame(() => {
+                        const x = (e.clientX - centerX) / centerX;
+                        const y = (e.clientY - centerY) / centerY;
+                        bg.style.transform = `translate(${x * -10}px, ${y * -10}px) scale(1.02)`;
+                    });
+                });
+            }
+
+            // High-Tech Easter Countdown Engine (Pre-order Deadline: March 25, 2026)
+            const launchDate = new Date('March 25, 2026 23:59:59').getTime();
+
+            const updateCountdown = setInterval(() => {
+                const now = new Date().getTime();
+                const distance = launchDate - now;
+
+                if (distance < 0) {
+                    clearInterval(updateCountdown);
+                    document.getElementById('cd-days').innerText = "00";
+                    document.getElementById('cd-hours').innerText = "00";
+                    document.getElementById('cd-mins').innerText = "00";
+                    document.getElementById('cd-secs').innerText = "00";
+                    document.querySelector('.status-pulse').innerHTML = `<div class="pulse-dot" style="background: #ff4d4d;"></div> PRE-ORDER CLOSED`;
+                    return;
+                }
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                document.getElementById('cd-days').innerText = days < 10 ? '0' + days : days;
+                document.getElementById('cd-hours').innerText = hours < 10 ? '0' + hours : hours;
+                document.getElementById('cd-mins').innerText = minutes < 10 ? '0' + minutes : minutes;
+                document.getElementById('cd-secs').innerText = seconds < 10 ? '0' + seconds : seconds;
+            }, 1000);
+
+        });
+
+        // =========================================
+        // SPOTLIGHT HOMEPAGE ORDER LOGIC (UPDATED TO TEE)
+        // =========================================
+        let spotlightSize = null;
+
+        function selectSpotlightSize(btn, size) {
+            document.querySelectorAll('.spot-size-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            spotlightSize = size;
+        }
+
+        function addSpotlightToCart() {
+            if (!spotlightSize) {
+                alert("SYSTEM HALT: PLEASE SELECT A SIZE.");
+                return;
+            }
+
+            // Since the spotlight is now the Tee, this matches the db entry for the Tee
+            const flagshipProduct = {
+                id: 'rt-002',
+                name: 'HERITAGE TEE',
+                price: 25000,
+                category: 'APPAREL',
+                tech: 'VINTAGE WASH',
+                images: ['https://images.unsplash.com/photo-1529139574466-a302d2d39ca2?q=80&w=1200&auto=format&fit=crop']
+            };
+
+            const existingItem = globalCart.find(item => item.id === flagshipProduct.id && item.size === spotlightSize);
+            
+            if(existingItem) {
+                existingItem.qty += 1;
+            } else {
+                globalCart.push({ ...flagshipProduct, size: spotlightSize, qty: 1, cartId: Date.now() });
+            }
+            
+            localStorage.setItem('rooted_cart', JSON.stringify(globalCart));
+            updateCartUI();
+            toggleCart();
+
+            // Reset Selection
+            spotlightSize = null;
+            document.querySelectorAll('.spot-size-btn').forEach(b => b.classList.remove('active'));
+        }
+
+
+        // =========================================
+        // GLOBAL CART LOGIC
+        // =========================================
+        let globalCart = JSON.parse(localStorage.getItem('rooted_cart')) || [];
+
+        function toggleCart() {
+            document.getElementById('cartDrawer').classList.toggle('open');
+            document.getElementById('cartOverlay').classList.toggle('open');
+            document.body.style.overflow = document.getElementById('cartDrawer').classList.contains('open') ? 'hidden' : 'auto';
+            updateCartUI(); 
+        }
+
+        function removeFromCart(cartId) {
+            globalCart = globalCart.filter(item => item.cartId !== cartId);
+            localStorage.setItem('rooted_cart', JSON.stringify(globalCart));
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            let totalItems = globalCart.reduce((sum, item) => sum + item.qty, 0);
+            let cartCountIcon = document.getElementById('nav-cart-count');
+            if(cartCountIcon) cartCountIcon.innerText = `[${totalItems}]`;
+            
+            const container = document.getElementById('cart-items-container');
+            const totalEl = document.getElementById('cart-total-price');
+            
+            if(!container || !totalEl) return;
+
+            if (globalCart.length === 0) {
+                container.innerHTML = "<p style='font-family: var(--font-tech); opacity: 0.5; text-align: center; margin-top: 2rem;'>ARCHIVE IS EMPTY.</p>";
+                totalEl.innerText = "₦0";
+                return;
+            }
+
+            let total = 0;
+            container.innerHTML = globalCart.map(item => {
+                let itemTotal = item.price * item.qty;
+                total += itemTotal;
+                
+                let imgSrc = (item.images && item.images[0]) ? item.images[0] : 'https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?w=800';
+
+                return `
+                    <div class="cart-item">
+                        <img src="${imgSrc}" class="ci-img" alt="${item.name}">
+                        <div class="ci-details">
+                            <div>
+                                <h4 class="ci-name">${item.name}</h4>
+                                <span class="ci-meta">SIZE: ${item.size} // QTY: ${item.qty}</span>
+                            </div>
+                            <div>
+                                <div class="ci-price">₦${itemTotal.toLocaleString()}</div>
+                                <button class="remove-item" onclick="removeFromCart(${item.cartId})">REMOVE [X]</button>
+                            </div>
+                        </div>
+                    </div>`;
+            }).join('');
+            
+            totalEl.innerText = `₦${total.toLocaleString()}`;
+        }
+
+        // Initialize cart count on load
+        updateCartUI();
+    </script>
+</body>
+</html>
