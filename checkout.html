@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ROOTED — Secure Terminal</title>
+    <title>ROOTED — Secure Checkout</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,114 +14,136 @@
            1. CORE VARIABLES & RESETS
            ========================================= */
         :root {
-            --earth-brown: #5C4033; --deep-earth: #3D2817; --off-white: #F5F1E8;
-            --pure-white: #FFFFFF; --accent-gold: #D4A574;
-            --border-light: rgba(245, 241, 232, 0.15); --border-dark: rgba(61, 40, 23, 0.2);
-            --font-primary: 'Inter', sans-serif; --font-tech: 'Space Mono', monospace;
+            --earth-brown: #5C4033;
+            --deep-earth: #2A1C11; 
+            --off-white: #F5F1E8;
+            --pure-white: #FFFFFF;
+            --accent-gold: #D4A574;
+            --border-light: rgba(245, 241, 232, 0.15);
+            --border-dark: rgba(42, 28, 17, 0.2);
+            --font-primary: 'Inter', sans-serif;
+            --font-tech: 'Space Mono', monospace;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background-color: var(--deep-earth); color: var(--off-white); font-family: var(--font-primary); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+        
+        /* LIGHT MODE ACTIVATED FOR CHECKOUT UX */
+        body { background-color: var(--off-white); color: var(--deep-earth); font-family: var(--font-primary); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
         a { text-decoration: none; color: inherit; }
-        input, textarea, button { font-family: inherit; }
+        input, textarea, button { font-family: inherit; border: none; outline: none; }
 
         .global-grain { position: fixed; inset: 0; pointer-events: none; z-index: 9999; background-image: url('https://upload.wikimedia.org/wikipedia/commons/7/76/Noise_grain.png'); opacity: 0.05; animation: grainMove 1s steps(2) infinite; }
         @keyframes grainMove { 0%, 100% { transform: translate(0,0); } 50% { transform: translate(-5%, -5%); } }
 
         /* =========================================
-           2. MINIMAL SECURE HEADER
+           2. LIGHT SECURE HEADER
            ========================================= */
         .secure-header {
-            padding: 2rem 5%; border-bottom: 1px solid var(--border-light);
+            padding: 2rem 5%; border-bottom: 1px solid var(--border-dark);
             display: flex; justify-content: space-between; align-items: center;
-            background: rgba(61, 40, 23, 0.98); backdrop-filter: blur(10px);
+            background: rgba(245, 241, 232, 0.95); backdrop-filter: blur(10px);
             position: sticky; top: 0; z-index: 1000;
         }
-        .logo-main { font-weight: 900; font-size: 1.5rem; letter-spacing: 0.25em; line-height: 1; margin-right: -0.25em; color: var(--off-white); }
-        .return-link { font-family: var(--font-tech); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.2em; color: var(--accent-gold); display: flex; align-items: center; gap: 8px; transition: 0.3s; }
-        .return-link:hover { transform: translateX(-5px); color: var(--off-white); }
+        .logo-main { font-weight: 900; font-size: 1.5rem; letter-spacing: 0.25em; line-height: 1; margin-right: -0.25em; color: var(--deep-earth); }
+        .return-link { font-family: var(--font-tech); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.2em; color: var(--deep-earth); opacity: 0.6; display: flex; align-items: center; gap: 8px; transition: 0.3s; }
+        .return-link:hover { transform: translateX(-5px); opacity: 1; color: var(--accent-gold); }
 
         /* =========================================
-           3. TERMINAL GRID LAYOUT
+           3. MASTER BUTTON SYSTEM (CONSISTENCY)
+           ========================================= */
+        .master-btn { 
+            position: relative; display: flex; width: 100%; max-width: 380px; height: 70px; 
+            background: transparent; border: 1px solid var(--border-dark); 
+            cursor: pointer; overflow: hidden; text-decoration: none; margin-top: 2rem;
+        }
+        .master-btn.full-width { max-width: 100%; }
+        
+        .btn-corner { position: absolute; width: 8px; height: 8px; border: 1px solid var(--deep-earth); transition: border-color 0.4s; z-index: 3;}
+        .tl { top: -1px; left: -1px; border-right: none; border-bottom: none; }
+        .tr { top: -1px; right: -1px; border-left: none; border-bottom: none; }
+        .bl { bottom: -1px; left: -1px; border-right: none; border-top: none; }
+        .br { bottom: -1px; right: -1px; border-left: none; border-top: none; }
+        
+        .mb-bg { position: absolute; inset: 0; background: var(--deep-earth); transform: scaleY(0); transform-origin: bottom; transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1); z-index: 1; }
+
+        .mb-text-wrap { position: relative; z-index: 2; width: 100%; height: 100%; display: flex; flex-direction: column; transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1); }
+        .mb-text-row { height: 70px; display: flex; align-items: center; justify-content: center; gap: 15px; font-family: var(--font-tech); font-weight: 700; font-size: 0.85rem; letter-spacing: 0.15em; color: var(--deep-earth); flex-shrink: 0; text-transform: uppercase;}
+        
+        .mb-text-row.hover-text { color: var(--off-white); }
+
+        .master-btn:hover .mb-bg { transform: scaleY(1); }
+        .master-btn:hover .mb-text-wrap { transform: translateY(-70px); }
+        .master-btn:hover .btn-corner { border-color: var(--off-white); }
+        .master-btn:hover { border-color: transparent; }
+
+        /* =========================================
+           4. TERMINAL GRID LAYOUT (LIGHT UX)
            ========================================= */
         .terminal-container {
-            display: grid; grid-template-columns: 1.2fr 0.8fr;
-            max-width: 1400px; margin: 0 auto; min-height: calc(100vh - 90px);
+            display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 4rem;
+            max-width: 1400px; margin: 0 auto; padding: 4rem 5%; min-height: calc(100vh - 90px);
         }
 
         /* --- LEFT: DATA HARVESTING --- */
-        .form-section { padding: 4rem 5%; border-right: 1px solid var(--border-light); }
-        
-        .section-title { font-family: var(--font-tech); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.2em; color: var(--accent-gold); margin-bottom: 2rem; display: flex; align-items: center; gap: 10px; }
-        .section-title::before { content: ''; width: 20px; height: 1px; background: var(--accent-gold); }
+        .section-title { font-family: var(--font-tech); font-size: 0.85rem; font-weight: 700; letter-spacing: 0.2em; color: var(--accent-gold); margin-bottom: 2rem; display: flex; align-items: center; gap: 10px; }
+        .section-title::before { content: ''; width: 25px; height: 1px; background: var(--accent-gold); }
 
-        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 4rem; }
-        .full-width { grid-column: 1 / -1; }
+        .form-grid { display: flex; flex-direction: column; gap: 2.5rem; margin-bottom: 4rem; }
         
-        .input-group { display: flex; flex-direction: column; gap: 0.5rem; position: relative; }
-        .input-group label { font-family: var(--font-tech); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.15em; color: rgba(245, 241, 232, 0.6); }
+        .input-group { display: flex; flex-direction: column; gap: 0.8rem; position: relative; }
+        .input-group label { font-family: var(--font-tech); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.15em; color: var(--deep-earth); opacity: 0.8; }
         .input-group input, .input-group textarea {
-            background: transparent; border: none; border-bottom: 1px solid var(--border-light);
-            color: var(--off-white); font-size: 1rem; padding: 0.8rem 0; outline: none; transition: 0.3s;
+            background: transparent; border-bottom: 2px solid var(--border-dark);
+            color: var(--deep-earth); font-size: 1.1rem; padding: 0.8rem 0; font-weight: 500; transition: 0.3s;
         }
+        .input-group input::placeholder, .input-group textarea::placeholder { color: rgba(42, 28, 17, 0.3); font-weight: 400; }
         .input-group input:focus, .input-group textarea:focus { border-color: var(--accent-gold); }
         
         /* Payment Block */
-        .payment-box { background: rgba(255,255,255,0.02); border: 1px solid var(--border-light); padding: 2rem; margin-bottom: 3rem; position: relative; overflow: hidden; }
-        .pb-title { font-weight: 800; font-size: 1rem; letter-spacing: 0.1em; margin-bottom: 1rem; text-transform: uppercase; }
-        .pb-desc { font-size: 0.85rem; opacity: 0.7; line-height: 1.6; margin-bottom: 2rem; }
-        .bank-details { font-family: var(--font-tech); font-size: 0.85rem; line-height: 2.2; color: var(--accent-gold); }
-        .bank-details strong { color: var(--off-white); font-weight: 700; letter-spacing: 0.05em; }
-
-        /* WhatsApp Cyber Button */
-        .whatsapp-btn {
-            position: relative; display: flex; width: 100%; height: 75px; background: transparent; border: 1px solid var(--border-light); cursor: pointer; overflow: hidden; margin-top: 2rem;
-        }
-        .wa-bg { position: absolute; inset: 0; background: #25D366; transform: scaleY(0); transform-origin: bottom; transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1); z-index: 1; }
-        .wa-text-wrap { position: relative; z-index: 2; width: 100%; height: 100%; display: flex; flex-direction: column; transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1); }
-        .wa-row { height: 75px; display: flex; align-items: center; justify-content: center; gap: 15px; font-weight: 800; font-size: 0.85rem; letter-spacing: 0.15em; color: var(--off-white); flex-shrink: 0; text-transform: uppercase; }
-        .whatsapp-btn:hover .wa-bg { transform: scaleY(1); }
-        .whatsapp-btn:hover .wa-text-wrap { transform: translateY(-75px); }
-        .whatsapp-btn:hover { border-color: transparent; }
+        .payment-box { background: #F0EBE1; border: 1px solid var(--border-dark); padding: 2.5rem; margin-bottom: 2rem; }
+        .pb-title { font-weight: 900; font-size: 1.1rem; letter-spacing: 0.1em; margin-bottom: 1rem; text-transform: uppercase; }
+        .pb-desc { font-size: 0.95rem; opacity: 0.8; line-height: 1.6; margin-bottom: 2rem; }
+        .bank-details { font-family: var(--font-tech); font-size: 0.9rem; line-height: 2.2; color: var(--deep-earth); opacity: 0.9; }
+        .bank-details strong { color: var(--deep-earth); font-weight: 700; letter-spacing: 0.05em; font-size: 1rem; opacity: 1;}
 
         /* --- RIGHT: ORDER SUMMARY --- */
-        .summary-section { padding: 4rem 5%; background: rgba(0,0,0,0.2); display: flex; flex-direction: column; }
-        .summary-items { flex-grow: 1; display: flex; flex-direction: column; gap: 1.5rem; margin-bottom: 3rem; }
+        .summary-wrapper { position: sticky; top: 120px; }
+        .summary-card { background: #F0EBE1; border: 1px solid var(--border-dark); padding: 3rem; display: flex; flex-direction: column; }
         
-        .s-item { display: grid; grid-template-columns: 80px 1fr auto; gap: 1.5rem; align-items: center; border-bottom: 1px solid var(--border-light); padding-bottom: 1.5rem; }
-        .s-img { width: 100%; aspect-ratio: 4/5; object-fit: cover; background: #EAE6DD; filter: sepia(0.1) grayscale(0.2); }
-        .s-name { font-weight: 800; font-size: 0.85rem; letter-spacing: 0.05em; margin-bottom: 5px; text-transform: uppercase; }
-        .s-meta { font-family: var(--font-tech); font-size: 0.65rem; color: var(--accent-gold); letter-spacing: 0.1em; }
-        .s-price { font-family: var(--font-tech); font-size: 0.9rem; font-weight: 700; }
+        .summary-items { flex-grow: 1; display: flex; flex-direction: column; gap: 2rem; margin-bottom: 3rem; }
+        
+        .s-item { display: grid; grid-template-columns: 80px 1fr auto; gap: 1.5rem; align-items: center; border-bottom: 1px solid var(--border-dark); padding-bottom: 1.5rem; }
+        .s-img { width: 100%; aspect-ratio: 4/5; object-fit: cover; background: var(--off-white); border: 1px solid var(--border-dark); }
+        .s-name { font-weight: 800; font-size: 0.95rem; letter-spacing: 0.05em; margin-bottom: 5px; text-transform: uppercase; }
+        .s-meta { font-family: var(--font-tech); font-size: 0.7rem; color: var(--accent-gold); letter-spacing: 0.1em; font-weight: 700;}
+        .s-price { font-family: var(--font-tech); font-size: 1rem; font-weight: 700; }
 
-        .receipt-breakdown { font-family: var(--font-tech); font-size: 0.75rem; letter-spacing: 0.1em; display: flex; flex-direction: column; gap: 1rem; border-top: 1px solid var(--border-light); padding-top: 2rem; }
-        .r-row { display: flex; justify-content: space-between; opacity: 0.7; }
-        .r-total { display: flex; justify-content: space-between; font-size: 1.2rem; font-weight: 700; color: var(--accent-gold); margin-top: 1rem; opacity: 1; padding-top: 1rem; border-top: 1px dashed var(--border-light); }
+        .receipt-breakdown { font-family: var(--font-tech); font-size: 0.8rem; letter-spacing: 0.1em; display: flex; flex-direction: column; gap: 1rem; }
+        .r-row { display: flex; justify-content: space-between; opacity: 0.8; font-weight: 700;}
+        .r-total { display: flex; justify-content: space-between; font-size: 1.4rem; font-weight: 700; color: var(--deep-earth); margin-top: 1.5rem; padding-top: 1.5rem; border-top: 2px dashed var(--border-dark); }
 
         /* Scroll Reveal Utility */
-        .reveal-elem { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
+        .reveal-elem { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
         .reveal-elem.is-visible { opacity: 1; transform: translateY(0); }
 
         /* =========================================
-           4. RESPONSIVE PERFECTION
+           5. RESPONSIVE PERFECTION
            ========================================= */
         @media (max-width: 1024px) {
-            .terminal-container { grid-template-columns: 1fr; }
-            .form-section { border-right: none; padding: 4rem 5%; }
-            /* On tablet/mobile, we swap the visual order so Summary is on top */
+            .terminal-container { grid-template-columns: 1fr; gap: 3rem; }
+            .summary-wrapper { position: static; }
+            /* On tablet/mobile, we swap visual order so Summary is on top */
             .terminal-container { display: flex; flex-direction: column; }
-            .summary-section { order: 1; border-bottom: 1px solid var(--border-light); }
-            .form-section { order: 2; }
+            .summary-wrapper { order: 1; }
+            .form-section { order: 2; padding: 0; border: none; }
         }
 
         @media (max-width: 768px) {
             .secure-header { padding: 1.5rem 5%; }
-            .form-grid { grid-template-columns: 1fr; gap: 1.5rem; }
-            .summary-section { padding: 3rem 1.5rem; }
-            .form-section { padding: 3rem 1.5rem; }
+            .terminal-container { padding: 3rem 1.5rem; }
+            .summary-card { padding: 2rem 1.5rem; }
+            .payment-box { padding: 2rem 1.5rem; }
             .s-item { grid-template-columns: 60px 1fr auto; gap: 1rem; }
-            .whatsapp-btn { height: 70px; }
-            .wa-row { height: 70px; font-size: 0.75rem; }
         }
     </style>
 </head>
@@ -141,30 +163,19 @@
         
         <div class="form-section reveal-elem">
             <div class="section-title">01 // SHIPPING DESTINATION</div>
+            
             <div class="form-grid">
-                <div class="input-group full-width">
-                    <label>FULL NAME</label>
-                    <input type="text" id="c-name" placeholder="Enter your full legal name" required>
+                <div class="input-group">
+                    <label>FULL LEGAL NAME</label>
+                    <input type="text" id="c-name" placeholder="First and Last Name" required>
                 </div>
                 <div class="input-group">
-                    <label>EMAIL ADDRESS</label>
-                    <input type="email" id="c-email" placeholder="For receipt & tracking" required>
+                    <label>ACTIVE WHATSAPP NUMBER</label>
+                    <input type="tel" id="c-phone" placeholder="e.g. +234 903 501 0746" required>
                 </div>
                 <div class="input-group">
-                    <label>WHATSAPP NUMBER</label>
-                    <input type="tel" id="c-phone" placeholder="Active line only" required>
-                </div>
-                <div class="input-group full-width">
-                    <label>DELIVERY ADDRESS</label>
-                    <textarea id="c-address" rows="2" placeholder="Street address, apartment, suite" required></textarea>
-                </div>
-                <div class="input-group">
-                    <label>CITY</label>
-                    <input type="text" id="c-city" placeholder="e.g. Lekki" required>
-                </div>
-                <div class="input-group">
-                    <label>STATE / REGION</label>
-                    <input type="text" id="c-state" placeholder="e.g. Lagos" required>
+                    <label>FULL DELIVERY ADDRESS (INCLUDE CITY & STATE)</label>
+                    <textarea id="c-address" rows="3" placeholder="House number, Street, Area, City, State" required></textarea>
                 </div>
             </div>
 
@@ -173,42 +184,46 @@
                 <div class="pb-title">DIRECT BANK TRANSFER</div>
                 <p class="pb-desc">To secure your physical artifact, please transfer the exact total to the coordinates below. Upon submission, your encrypted order data will be transmitted to our WhatsApp terminal for receipt verification.</p>
                 <div class="bank-details">
-                    BANK INSTITUTION: <br><strong>GUARANTY TRUST BANK (GTB)</strong><br><br>
-                    ACCOUNT NUMBER: <br><strong>0123456789</strong><br><br>
+                    BANK: <br><strong>GUARANTY TRUST BANK (GTB)</strong><br><br>
+                    ACCOUNT NO: <br><strong>0123456789</strong><br><br>
                     ACCOUNT NAME: <br><strong>ROOTED APPAREL LTD</strong>
                 </div>
             </div>
 
-            <button class="whatsapp-btn" onclick="finalizeOrder()">
-                <div class="wa-bg"></div>
-                <div class="wa-text-wrap">
-                    <div class="wa-row">TRANSMIT ORDER TO WHATSAPP</div>
-                    <div class="wa-row hover-text">
+            <button class="master-btn full-width" onclick="finalizeOrder()">
+                <div class="btn-corner tl"></div><div class="btn-corner tr"></div>
+                <div class="btn-corner bl"></div><div class="btn-corner br"></div>
+                <div class="mb-bg"></div>
+                <div class="mb-text-wrap">
+                    <div class="mb-text-row">TRANSMIT ORDER TO WHATSAPP</div>
+                    <div class="mb-text-row hover-text">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-                        INITIATE TRANSFER VERIFICATION
+                        INITIATE VERIFICATION
                     </div>
                 </div>
             </button>
         </div>
 
-        <div class="summary-section reveal-elem">
-            <div class="section-title">ORDER SUMMARY</div>
-            
-            <div class="summary-items" id="summary-container">
-                </div>
+        <div class="summary-wrapper reveal-elem">
+            <div class="summary-card">
+                <div class="section-title">ORDER SUMMARY</div>
+                
+                <div class="summary-items" id="summary-container">
+                    </div>
 
-            <div class="receipt-breakdown">
-                <div class="r-row">
-                    <span>SUBTOTAL</span>
-                    <span id="receipt-subtotal">₦0</span>
-                </div>
-                <div class="r-row" style="color: var(--accent-gold);">
-                    <span>SHIPPING</span>
-                    <span>COMPLIMENTARY</span>
-                </div>
-                <div class="r-total">
-                    <span>TOTAL</span>
-                    <span id="receipt-total">₦0</span>
+                <div class="receipt-breakdown">
+                    <div class="r-row">
+                        <span>SUBTOTAL</span>
+                        <span id="receipt-subtotal">₦0</span>
+                    </div>
+                    <div class="r-row" style="color: var(--accent-gold);">
+                        <span>SHIPPING</span>
+                        <span>COMPLIMENTARY</span>
+                    </div>
+                    <div class="r-total">
+                        <span>TOTAL</span>
+                        <span id="receipt-total">₦0</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -243,9 +258,9 @@
             const totalEl = document.getElementById('receipt-total');
 
             if(cart.length === 0) {
-                container.innerHTML = "<p style='opacity: 0.5; font-family: var(--font-tech); font-size: 0.8rem;'>YOUR ARCHIVE IS EMPTY. <a href='products.html' style='color:var(--accent-gold); text-decoration:underline;'>RETURN TO SHOP</a></p>";
-                document.querySelector('.whatsapp-btn').style.opacity = '0.5';
-                document.querySelector('.whatsapp-btn').style.pointerEvents = 'none';
+                container.innerHTML = "<p style='opacity: 0.6; font-family: var(--font-tech); font-size: 0.85rem;'>YOUR ARCHIVE IS EMPTY. <br><br><a href='products.html' style='color:var(--accent-gold); text-decoration:underline;'>RETURN TO SHOP</a></p>";
+                document.querySelector('.master-btn').style.opacity = '0.5';
+                document.querySelector('.master-btn').style.pointerEvents = 'none';
                 return;
             }
 
@@ -274,13 +289,11 @@
             if(cart.length === 0) return;
 
             const name = document.getElementById('c-name').value;
-            const email = document.getElementById('c-email').value;
             const phone = document.getElementById('c-phone').value;
             const address = document.getElementById('c-address').value;
-            const city = document.getElementById('c-city').value;
-            const state = document.getElementById('c-state').value;
 
-            if(!name || !phone || !address || !city || !state) {
+            // Simple validation check
+            if(!name || !phone || !address) {
                 alert("SYSTEM HALT: PLEASE COMPLETE ALL REQUIRED SHIPPING DETAILS.");
                 return;
             }
@@ -299,15 +312,14 @@
                         `----------------------- %0A` +
                         `*SHIPPING DATA:* %0A` +
                         `Name: ${name} %0A` +
-                        `Email: ${email} %0A` +
                         `Phone: ${phone} %0A` +
-                        `Location: ${address}, ${city}, ${state} %0A%0A` +
+                        `Location: ${address} %0A%0A` +
                         `_I have completed the transfer. I will attach my receipt below._`;
 
             // Clear Cart upon successful transition to WhatsApp
             localStorage.removeItem('rooted_cart');
             
-            // Redirect to WhatsApp (REPLACE WITH YOUR BUSINESS NUMBER)
+            // Redirect to WhatsApp
             const whatsappNumber = "2349035010746"; 
             window.location.href = `https://wa.me/${whatsappNumber}?text=${msg}`;
         }
