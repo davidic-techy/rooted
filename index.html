@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ROOTED — Cultural Streetwear</title>
+    <title>ROOTED — The Resurrection Drop</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,21 +15,21 @@
            ========================================= */
         :root {
             --earth-brown: #5C4033;
-            --deep-earth: #3D2817;
+            --deep-earth: #2A1C11; 
             --off-white: #F5F1E8;
             --pure-white: #FFFFFF;
             --accent-gold: #D4A574;
             --border-light: rgba(245, 241, 232, 0.15);
-            --border-dark: rgba(61, 40, 23, 0.15);
+            --border-dark: rgba(42, 28, 17, 0.2);
             --font-primary: 'Inter', sans-serif;
             --font-tech: 'Space Mono', monospace;
-            --archived-grey: rgba(0, 0, 0, 0.4);
+            --archived-grey: rgba(0, 0, 0, 0.6);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
         body { background-color: var(--deep-earth); color: var(--off-white); font-family: var(--font-primary); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
         a { text-decoration: none; color: inherit; }
-        button { font-family: inherit; }
+        button { font-family: inherit; border: none; cursor: pointer; }
 
         .global-grain { position: fixed; inset: 0; pointer-events: none; z-index: 9999; background-image: url('https://upload.wikimedia.org/wikipedia/commons/7/76/Noise_grain.png'); opacity: 0.05; animation: grainMove 1s steps(2) infinite; }
         @keyframes grainMove { 0%, 100% { transform: translate(0,0); } 50% { transform: translate(-5%, -5%); } }
@@ -37,7 +37,7 @@
         /* =========================================
            2. ELITE HEADER & NAVIGATION
            ========================================= */
-        .elite-header { position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; background: rgba(61, 40, 23, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-light); }
+        .elite-header { position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; background: rgba(42, 28, 17, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-light); }
         .utility-bar { display: grid; grid-template-columns: 1fr auto 1fr; padding: 0.6rem 2.5rem; border-bottom: 1px solid var(--border-light); font-size: 0.65rem; font-weight: 600; color: var(--accent-gold); letter-spacing: 0.15em; text-transform: uppercase; }
         .util-left { text-align: left; opacity: 0.8;}
         .util-center { text-align: center; color: var(--off-white); }
@@ -60,36 +60,62 @@
         .logo-sub { font-weight: 700; font-size: 0.55rem; letter-spacing: 0.4em; color: var(--accent-gold); margin-top: 4px; }
 
         /* =========================================
-           3. TIGHT & RESPONSIVE HERO
+           3. CONSISTENT MASTER BUTTON SYSTEM
            ========================================= */
-        .hero-architectural { padding-top: 110px; display: flex; align-items: center; justify-content: center; padding-bottom: 3rem; }
-        .hero-frame { width: 95%; max-width: 1600px; height: clamp(450px, 75vh, 700px); display: grid; grid-template-columns: 55% 45%; border: 1px solid var(--border-light); }
-        .hero-visual { position: relative; border-right: 1px solid var(--border-light); overflow: hidden; }
-        .hero-visual img { width: 100%; height: 100%; object-fit: cover; filter: sepia(0.1) grayscale(0.1) brightness(0.85); transition: transform 10s ease-out; }
-        .hero-visual:hover img { transform: scale(1.03); }
-
-        .hero-content-panel { display: flex; flex-direction: column; justify-content: center; background-color: var(--deep-earth); padding: 3rem 4rem; position: relative; }
-        .collection-badge { display: inline-block; font-size: 0.75rem; font-weight: 700; color: var(--accent-gold); letter-spacing: 0.2em; margin-bottom: 1.5rem; }
-        .hero-display { font-size: clamp(3rem, 5vw, 5.5rem); font-weight: 800; line-height: 0.95; letter-spacing: -0.03em; margin-bottom: 1.5rem; }
-        .hero-manifesto { font-size: 1rem; line-height: 1.6; opacity: 0.8; max-width: 400px; margin-bottom: 2.5rem; }
-
-        .cyber-btn { position: relative; display: flex; width: 100%; max-width: 350px; height: 65px; background: transparent; border: 1px solid rgba(255,255,255,0.2); cursor: pointer; overflow: hidden; text-decoration: none; }
+        .master-btn { 
+            position: relative; display: flex; width: 100%; max-width: 380px; height: 65px; 
+            background: transparent; border: 1px solid rgba(255,255,255,0.2); 
+            cursor: pointer; overflow: hidden; text-decoration: none; 
+        }
+        
+        .master-btn.dark-mode { border-color: rgba(42, 28, 17, 0.2); }
+        .master-btn.gold-mode { border-color: var(--accent-gold); }
+        .master-btn.full-width { max-width: 100%; }
+        
         .btn-corner { position: absolute; width: 8px; height: 8px; border: 1px solid var(--accent-gold); transition: border-color 0.4s; z-index: 3;}
         .tl { top: -1px; left: -1px; border-right: none; border-bottom: none; }
         .tr { top: -1px; right: -1px; border-left: none; border-bottom: none; }
         .bl { bottom: -1px; left: -1px; border-right: none; border-top: none; }
         .br { bottom: -1px; right: -1px; border-left: none; border-top: none; }
-        .cyber-bg { position: absolute; inset: 0; background: var(--off-white); transform: scaleY(0); transform-origin: bottom; transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1); z-index: 1; }
-        .cyber-text-wrap { position: relative; z-index: 2; width: 100%; height: 100%; display: flex; flex-direction: column; transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1); }
-        .cyber-text-row { height: 65px; display: flex; align-items: center; justify-content: center; gap: 15px; font-family: var(--font-tech); font-weight: 700; font-size: 0.8rem; letter-spacing: 0.2em; color: var(--off-white); flex-shrink: 0; }
-        .cyber-text-row.hover-text { color: var(--deep-earth); }
-        .cyber-btn:hover .cyber-bg { transform: scaleY(1); }
-        .cyber-btn:hover .cyber-text-wrap { transform: translateY(-65px); }
-        .cyber-btn:hover .btn-corner { border-color: var(--deep-earth); }
-        .cyber-btn:hover { border-color: transparent; }
+        
+        .mb-bg { position: absolute; inset: 0; background: var(--off-white); transform: scaleY(0); transform-origin: bottom; transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1); z-index: 1; }
+        .master-btn.dark-mode .mb-bg { background: var(--deep-earth); }
+        .master-btn.gold-mode .mb-bg { background: var(--accent-gold); }
+
+        .mb-text-wrap { position: relative; z-index: 2; width: 100%; height: 100%; display: flex; flex-direction: column; transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1); }
+        .mb-text-row { height: 65px; display: flex; align-items: center; justify-content: center; gap: 15px; font-family: var(--font-tech); font-weight: 700; font-size: 0.8rem; letter-spacing: 0.2em; color: var(--off-white); flex-shrink: 0; text-transform: uppercase;}
+        
+        .master-btn.dark-mode .mb-text-row { color: var(--deep-earth); }
+        .master-btn.gold-mode .mb-text-row { color: var(--accent-gold); }
+        
+        .mb-text-row.hover-text { color: var(--deep-earth); }
+        .master-btn.dark-mode .mb-text-row.hover-text { color: var(--off-white); }
+        .master-btn.gold-mode .mb-text-row.hover-text { color: var(--deep-earth); }
+
+        .master-btn:hover .mb-bg { transform: scaleY(1); }
+        .master-btn:hover .mb-text-wrap { transform: translateY(-65px); }
+        .master-btn:hover .btn-corner { border-color: var(--deep-earth); }
+        .master-btn.dark-mode:hover .btn-corner { border-color: var(--off-white); }
+        .master-btn:hover { border-color: transparent; }
 
         /* =========================================
-           4. EASTER PRE-ORDER SHOWROOM (LIGHT)
+           4. CULTURAL HERO (BRAND FOCUS)
+           ========================================= */
+        .hero-architectural { padding-top: 110px; display: flex; align-items: center; justify-content: center; padding-bottom: 3rem; }
+        .hero-frame { width: 95%; max-width: 1600px; height: clamp(500px, 75vh, 700px); display: grid; grid-template-columns: 55% 45%; border: 1px solid var(--border-light); position: relative;}
+        
+        .hero-visual { position: relative; border-right: 1px solid var(--border-light); overflow: hidden; background: #111; }
+        .hero-visual::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, rgba(42, 28, 17, 0.3), rgba(42, 28, 17, 0.9)); z-index: 1; }
+        .hero-visual img { width: 100%; height: 100%; object-fit: cover; opacity: 0.85; filter: sepia(0.4) contrast(1.2) brightness(0.8); transition: transform 10s ease-out; }
+        .hero-visual:hover img { transform: scale(1.05); }
+
+        .hero-content-panel { display: flex; flex-direction: column; justify-content: center; background-color: var(--deep-earth); padding: 3rem 4rem; position: relative; z-index: 2;}
+        .collection-badge { display: inline-block; font-size: 0.75rem; font-weight: 700; color: var(--accent-gold); letter-spacing: 0.2em; margin-bottom: 1.5rem; }
+        .hero-display { font-size: clamp(3rem, 5vw, 5rem); font-weight: 900; line-height: 0.95; letter-spacing: -0.03em; margin-bottom: 1.5rem; text-transform: uppercase; }
+        .hero-manifesto { font-size: 1.05rem; line-height: 1.6; opacity: 0.8; max-width: 400px; margin-bottom: 3rem; }
+
+        /* =========================================
+           5. EASTER DROP SHOWROOM 
            ========================================= */
         .easter-drop-section { background-color: var(--off-white); color: var(--deep-earth); padding: 8rem 5%; position: relative; border-bottom: 1px solid var(--border-light); }
         .ed-container { max-width: 1600px; margin: 0 auto; }
@@ -112,86 +138,41 @@
         .t-label { font-size: 0.65rem; letter-spacing: 0.2em; opacity: 0.6; margin-top: 5px; font-weight: 700;}
         .t-sep { font-size: 2.5rem; color: var(--accent-gold); position: relative; top: -10px; }
 
-        .ed-mockups { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1.5rem; margin-bottom: 5rem; }
-        .mockup-card { display: flex; flex-direction: column; text-decoration: none; color: inherit; background: #fff; border: 1px solid var(--border-dark); transition: transform 0.4s ease, box-shadow 0.4s ease; }
-        .mockup-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(61,40,23,0.08); }
-        .mockup-visual { aspect-ratio: 3/4; background: #F0EBE1; position: relative; overflow: hidden; border-bottom: 1px solid var(--border-dark); display: flex; align-items: center; justify-content: center; }
-        .mockup-visual img { width: 80%; height: 80%; object-fit: contain; mix-blend-mode: multiply; filter: grayscale(0.8) contrast(1.1); transition: all 0.5s ease; }
-        .mockup-card:hover .mockup-visual img { filter: grayscale(0) contrast(1.1); transform: scale(1.05); }
+        /* Smooth Horizontal Scrolling Grid - FIXED TO EXACTLY 5 COLUMNS ON DESKTOP */
+        .h-scroll-grid { 
+            display: grid; grid-auto-flow: column; grid-auto-columns: calc(20% - 0.8px); 
+            gap: 1px; background-color: var(--border-dark); border: 1px solid var(--border-dark); 
+            overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; margin-bottom: 4rem; 
+        }
+        .h-scroll-grid::-webkit-scrollbar { display: none; }
 
-        .mockup-meta { padding: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem; background: var(--off-white); }
+        .mockup-card { display: flex; flex-direction: column; text-decoration: none; color: inherit; background: var(--off-white); scroll-snap-align: start; position: relative;}
+        .mockup-visual { aspect-ratio: 3/4; background: #EAE6DD; position: relative; overflow: hidden; border-bottom: 1px solid var(--border-dark); display: flex; align-items: center; justify-content: center; }
+        .mockup-visual img { width: 80%; height: 80%; object-fit: contain; mix-blend-mode: multiply; filter: sepia(0.05) grayscale(0.1) brightness(0.95); transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1); }
+        
+        .mockup-mask { position: absolute; inset: 0; background: rgba(42, 28, 17, 0.9); display: flex; align-items: center; justify-content: center; transform: translateY(100%); transition: 0.4s cubic-bezier(0.19, 1, 0.22, 1); }
+        .mockup-mask-text { font-family: var(--font-primary); font-weight: 800; font-size: 0.9rem; letter-spacing: 0.2em; color: var(--off-white); opacity: 0; transform: translateY(10px); transition: 0.3s ease 0.1s; }
+        
+        .mockup-card:hover .mockup-mask { transform: translateY(0); }
+        .mockup-card:hover .mockup-visual img { filter: grayscale(0) contrast(1.1); transform: scale(1.05); }
+        .mockup-card:hover .mockup-mask-text { opacity: 1; transform: translateY(0); color: var(--pure-white); }
+
+        .mockup-meta { padding: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem; background: var(--off-white); flex-grow: 1;}
         .m-id { font-family: var(--font-tech); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.15em; color: var(--accent-gold); }
-        .m-name { font-weight: 800; font-size: 1.1rem; letter-spacing: 0.05em; text-transform: uppercase; }
-        .m-action { font-family: var(--font-tech); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; opacity: 0.5; margin-top: 0.5rem; }
+        .m-name { font-weight: 900; font-size: 1.1rem; letter-spacing: -0.02em; text-transform: uppercase; color: var(--deep-earth); }
+        .m-action { font-family: var(--font-tech); font-size: 0.6rem; font-weight: 700; letter-spacing: 0.1em; opacity: 0.5; margin-top: auto; color: var(--deep-earth); padding-top: 0.5rem; }
 
         .ed-footer { display: flex; justify-content: center; }
-        .dark-btn { display: inline-flex; align-items: center; justify-content: space-between; width: 100%; max-width: 350px; background-color: var(--deep-earth); color: var(--off-white); padding: 1.4rem 2.5rem; font-size: 0.85rem; font-weight: 800; letter-spacing: 0.15em; transition: all 0.4s ease; border: 1px solid var(--deep-earth); position: relative; overflow: hidden; text-decoration: none; cursor: pointer; }
-        .dark-btn::before { content: ''; position: absolute; top: 0; left: 0; width: 0%; height: 100%; background-color: var(--accent-gold); transition: width 0.4s cubic-bezier(0.19, 1, 0.22, 1); z-index: 1; }
-        .dark-btn .btn-text, .dark-btn .btn-arrow { position: relative; z-index: 2; transition: color 0.4s; }
-        .dark-btn:hover::before { width: 100%; }
-        .dark-btn:hover .btn-text, .dark-btn:hover .btn-arrow { color: var(--deep-earth); }
-        .dark-btn:hover .btn-arrow { transform: translateX(8px); }
 
         /* =========================================
-           5. ASYMMETRICAL EXHIBITION (LATEST REVELATIONS)
-           ========================================= */
-        .exhibition-section { background-color: var(--off-white); color: var(--deep-earth); padding: 4rem 5% 8rem; position: relative; }
-        .exhibition-header { max-width: 1400px; margin: 0 auto 3rem; position: relative; } 
-        .header-line { width: 100%; height: 2px; background: var(--deep-earth); margin-bottom: 1.5rem; }
-        .header-meta { display: flex; justify-content: space-between; font-weight: 800; font-size: 0.75rem; letter-spacing: 0.2em; color: var(--accent-gold); margin-bottom: 2rem; text-transform: uppercase; }
-        .exhibition-title { font-size: clamp(3rem, 6vw, 6rem); font-weight: 900; line-height: 0.9; letter-spacing: -0.04em; text-transform: uppercase; }
-
-        .exhibition-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 2rem; max-width: 1600px; margin: 0 auto; }
-        .item-hoodie { grid-column: 1 / 7; }
-        .item-tee { grid-column: 8 / 13; margin-top: 4rem; }
-        .item-pants { grid-column: 2 / 12; margin-top: 2rem; }
-        .item-cap { grid-column: 1 / 6; margin-top: 2rem; }
-        .item-tote { grid-column: 7 / 13; margin-top: -3rem; } 
-
-        .artifact-card { display: flex; flex-direction: column; text-decoration: none; color: inherit; }
-        .artifact-visual { position: relative; overflow: hidden; background: #e0dcd3; margin-bottom: 1rem; }
-        .item-hoodie .artifact-visual { aspect-ratio: 4/5; }
-        .item-tee .artifact-visual { aspect-ratio: 3/4; }
-        .item-pants .artifact-visual { aspect-ratio: 16/9; }
-        .item-cap .artifact-visual { aspect-ratio: 1/1; }
-        .item-tote .artifact-visual { aspect-ratio: 3/4; }
-        
-        .parallax-img { width: 100%; height: 100%; object-fit: cover; filter: sepia(0.1) grayscale(0.2) contrast(1.1); transition: transform 0.6s ease, filter 0.6s; }
-        .visual-mask { position: absolute; inset: 0; background: rgba(61, 40, 23, 0.9); display: flex; align-items: center; justify-content: center; transform: translateY(100%); transition: transform 0.4s ease; }
-        .mask-text { font-weight: 800; font-size: 1rem; letter-spacing: 0.2em; color: var(--off-white); opacity: 0; transform: translateY(10px); transition: all 0.3s ease 0.1s; }
-        
-        /* HOVER ONLY FOR ACTIVE LINKS */
-        a.artifact-card:hover .visual-mask { transform: translateY(0); }
-        a.artifact-card:hover .parallax-img { transform: scale(1.03); filter: none; }
-        a.artifact-card:hover .mask-text { opacity: 1; transform: translateY(0); color: var(--pure-white); }
-
-        .artifact-data { padding-top: 0.8rem; border-top: 1px solid var(--border-dark); }
-        .data-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
-        .a-sku { font-family: var(--font-tech); font-size: 0.7rem; letter-spacing: 0.15em; color: var(--accent-gold); }
-        .a-price { font-weight: 800; font-size: 1rem; letter-spacing: 0.05em; }
-        .a-name { font-size: 1.4rem; font-weight: 900; letter-spacing: -0.02em; margin-bottom: 0.3rem; text-transform: uppercase; }
-        .a-tech { font-family: var(--font-tech); font-size: 0.6rem; font-weight: 700; letter-spacing: 0.1em; opacity: 0.6; }
-
-        /* STATUS BADGING FOR ARCHIVED ITEMS */
-        .status-badge { position: absolute; top: 1rem; right: 1rem; font-family: var(--font-tech); font-size: 0.6rem; font-weight: 700; letter-spacing: 0.15em; padding: 4px 8px; z-index: 10; }
-        .badge-archived { background: var(--archived-grey); color: var(--off-white); }
-        
-        /* State for unavailable items */
-        .artifact-card.disabled { cursor: not-allowed; }
-        .artifact-card.disabled .parallax-img { filter: grayscale(1) opacity(0.7); }
-        .artifact-card.disabled .a-price { opacity: 0.4; }
-
-        .exhibition-footer { display: flex; justify-content: center; padding-top: 4rem; }
-
-        /* =========================================
-           6. HUD ARTIFACT SPOTLIGHT (Direct Checkout)
+           6. HUD ARTIFACT SPOTLIGHT (THE GOSPEL TEE)
            ========================================= */
         .spotlight-section { background-color: var(--deep-earth); color: var(--off-white); padding: 8rem 5%; position: relative; border-top: 1px solid var(--border-light); display: flex; justify-content: center; }
         .spotlight-container { width: 100%; max-width: 1600px; display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--border-light); background: rgba(255, 255, 255, 0.02); }
 
-        .spotlight-visual { position: relative; border-right: 1px solid var(--border-light); overflow: hidden; min-height: 700px; }
-        .spotlight-img { width: 100%; height: 100%; object-fit: cover; filter: sepia(0.2) grayscale(0.2) brightness(0.8); transition: transform 1.5s cubic-bezier(0.19, 1, 0.22, 1); }
-        .spotlight-visual:hover .spotlight-img { transform: scale(1.05); filter: sepia(0) grayscale(0) brightness(1); }
+        .spotlight-visual { position: relative; border-right: 1px solid var(--border-light); overflow: hidden; min-height: 700px; background: #EAE6DD; }
+        .spotlight-img { width: 100%; height: 100%; object-fit: cover; filter: sepia(0.1) grayscale(0.2) brightness(0.9); transition: transform 1.5s cubic-bezier(0.19, 1, 0.22, 1); }
+        .spotlight-visual:hover .spotlight-img { transform: scale(1.05); filter: none; }
 
         .hud-frame { position: absolute; inset: 1.5rem; border: 1px solid rgba(212, 165, 116, 0.2); z-index: 2; pointer-events: none; }
         .crosshair { position: absolute; width: 15px; height: 15px; border: 1px solid var(--accent-gold); }
@@ -202,64 +183,75 @@
 
         .scan-line { position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: linear-gradient(to right, transparent, var(--accent-gold), transparent); opacity: 0.5; box-shadow: 0 0 10px var(--accent-gold); animation: scan 4s ease-in-out infinite; }
         @keyframes scan { 0% { top: 0; opacity: 0; } 10% { opacity: 0.5; } 90% { opacity: 0.5; } 100% { top: 100%; opacity: 0; } }
-        .hud-status { position: absolute; bottom: 1rem; right: 1rem; font-family: var(--font-tech); font-size: 0.6rem; letter-spacing: 0.2em; color: var(--accent-gold); display: flex; align-items: center; gap: 8px; background: rgba(61, 40, 23, 0.8); padding: 5px 10px; }
+        .hud-status { position: absolute; bottom: 1rem; right: 1rem; font-family: var(--font-tech); font-size: 0.6rem; letter-spacing: 0.2em; color: var(--accent-gold); display: flex; align-items: center; gap: 8px; background: rgba(42, 28, 17, 0.8); padding: 5px 10px; }
 
         .spotlight-content { padding: 6rem 4rem; display: flex; flex-direction: column; justify-content: center; }
         .s-meta { font-family: var(--font-tech); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.2em; color: var(--accent-gold); margin-bottom: 2rem; display: flex; align-items: center; gap: 1rem; }
         .s-meta::before { content: ''; display: block; width: 30px; height: 1px; background: var(--accent-gold); }
-        .s-title { font-size: clamp(3.5rem, 6vw, 6.5rem); font-weight: 900; line-height: 0.9; letter-spacing: -0.04em; color: var(--off-white); margin-bottom: 2rem; }
+        .s-title { font-size: clamp(3.5rem, 6vw, 5.5rem); font-weight: 900; line-height: 0.9; letter-spacing: -0.04em; color: var(--off-white); margin-bottom: 1rem; }
+        .s-price { font-family: var(--font-tech); font-size: 1.5rem; font-weight: 700; color: var(--accent-gold); margin-bottom: 2rem; }
         .s-desc { font-size: 1rem; line-height: 1.7; opacity: 0.7; max-width: 450px; margin-bottom: 3rem; }
+
+        /* Direct Sizing */
+        .size-selector { margin-bottom: 3rem; }
+        .s-label { font-family: var(--font-tech); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.2em; margin-bottom: 1rem; display: block; color: var(--accent-gold); }
+        .size-grid { display: flex; gap: 10px; flex-wrap: wrap; }
+        .size-btn { background: transparent; border: 1px solid var(--border-light); color: var(--off-white); font-family: var(--font-tech); font-weight: 700; font-size: 0.85rem; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1); }
+        .size-btn:hover { border-color: var(--accent-gold); color: var(--accent-gold); }
+        .size-btn.active { background: var(--accent-gold); color: var(--deep-earth); border-color: var(--accent-gold); }
 
         .s-specs { list-style: none; padding: 0; margin-bottom: 3rem; border-top: 1px solid var(--border-light); }
         .s-specs li { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; border-bottom: 1px solid var(--border-light); font-family: var(--font-tech); font-size: 0.7rem; letter-spacing: 0.1em; }
         .spec-label { color: var(--accent-gold); font-weight: 700; }
         .spec-value { opacity: 0.8; text-align: right; max-width: 60%; }
 
-        /* Direct Sizing on Homepage Spotlight */
-        .size-selector { margin-bottom: 3rem; }
-        .s-label { font-family: var(--font-tech); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.2em; margin-bottom: 1rem; display: block; color: var(--accent-gold); }
-        .size-grid { display: flex; gap: 10px; flex-wrap: wrap; }
-        .size-btn {
-            background: transparent; border: 1px solid var(--border-light); color: var(--off-white);
-            font-family: var(--font-tech); font-weight: 700; font-size: 0.85rem;
-            width: 50px; height: 50px; display: flex; align-items: center; justify-content: center;
-            cursor: pointer; transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
-        }
-        .size-btn:hover { border-color: var(--accent-gold); color: var(--accent-gold); }
-        .size-btn.active { background: var(--accent-gold); color: var(--deep-earth); border-color: var(--accent-gold); }
+        /* =========================================
+           7. THE VAULT / IN DEVELOPMENT (BLURRED)
+           ========================================= */
+        .vault-section { background-color: var(--off-white); color: var(--deep-earth); padding: 6rem 5% 8rem; position: relative; border-top: 1px solid var(--border-light); }
+        .vault-header { max-width: 1400px; margin: 0 auto 3rem; text-align: center; } 
+        .vault-title { font-size: clamp(2.5rem, 5vw, 4.5rem); font-weight: 900; line-height: 0.9; letter-spacing: -0.04em; text-transform: uppercase; margin-bottom: 1rem; }
+        .vault-desc { font-family: var(--font-tech); font-size: 0.8rem; font-weight: 700; color: var(--accent-gold); letter-spacing: 0.2em; text-transform: uppercase; }
 
-        .spotlight-btn { display: inline-flex; align-items: center; justify-content: space-between; width: 100%; max-width: 380px; height: 70px; background: transparent; border: 1px solid var(--off-white); color: var(--off-white); font-weight: 800; font-size: 0.85rem; letter-spacing: 0.2em; padding: 0 0 0 2rem; transition: all 0.4s ease; position: relative; overflow: hidden; text-decoration: none; cursor: pointer;}
-        .spotlight-btn::before { content: ''; position: absolute; top: 0; left: 0; width: 0%; height: 100%; background: var(--off-white); transition: width 0.4s cubic-bezier(0.19, 1, 0.22, 1); z-index: 1; }
-        .s-btn-text { position: relative; z-index: 2; transition: color 0.4s; }
-        .s-btn-icon { width: 70px; height: 100%; border-left: 1px solid var(--off-white); display: flex; align-items: center; justify-content: center; position: relative; z-index: 2; transition: all 0.4s; }
-        .spotlight-btn:hover { border-color: var(--off-white); }
-        .spotlight-btn:hover::before { width: 100%; }
-        .spotlight-btn:hover .s-btn-text { color: var(--deep-earth); }
-        .spotlight-btn:hover .s-btn-icon { border-color: var(--deep-earth); color: var(--deep-earth); transform: translateX(5px); }
+        /* EXACTLY 5 COLUMNS FOR DESKTOP */
+        .vault-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1px; background-color: var(--border-dark); border: 1px solid var(--border-dark); max-width: 1600px; margin: 0 auto; }
+
+        /* The Frosted Glass Blur Effect */
+        .vault-item { background-color: var(--off-white); display: flex; flex-direction: column; position: relative; cursor: not-allowed; overflow: hidden; pointer-events: none;}
+        .vault-item .item-visual { position: relative; width: 100%; aspect-ratio: 4/5; background: #EAE6DD; border-bottom: 1px solid var(--border-dark);}
+        .vault-item .item-img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%) blur(6px) opacity(0.6); transform: scale(1.03); }
+        
+        .vault-data { padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between; flex-grow: 1; opacity: 0.5; }
+        .v-top-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem; }
+        .v-sku { font-family: var(--font-tech); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.15em; color: var(--deep-earth); }
+        .v-name { font-size: 1.1rem; font-weight: 900; letter-spacing: -0.02em; text-transform: uppercase; margin-bottom: 0.5rem; }
+        
+        .status-badge.locked { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0,0,0,0.85); color: var(--pure-white); font-family: var(--font-tech); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.2em; padding: 12px 24px; z-index: 10; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.15); white-space: nowrap;}
 
         /* =========================================
-           7. ELITE FOOTER ARCHITECTURE
+           8. ELITE FOOTER
            ========================================= */
         .elite-footer { background-color: var(--deep-earth); color: var(--off-white); position: relative; overflow: hidden; border-top: 1px solid var(--border-light); padding: 8rem 5% 2rem; }
         .footer-watermark { position: absolute; bottom: -8%; left: 50%; transform: translateX(-50%); font-family: var(--font-primary); font-size: clamp(10rem, 25vw, 30rem); font-weight: 900; color: rgba(245, 241, 232, 0.02); line-height: 0.8; white-space: nowrap; pointer-events: none; z-index: 1; letter-spacing: -0.05em; }
         .footer-container { position: relative; z-index: 10; max-width: 1600px; margin: 0 auto; }
-
         .f-newsletter { max-width: 600px; margin-bottom: 6rem; }
         .f-n-label { font-family: var(--font-tech); font-size: 0.75rem; color: var(--accent-gold); letter-spacing: 0.2em; margin-bottom: 1rem; display: block; }
         .f-n-title { font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1; margin-bottom: 2rem; }
         .f-form { display: flex; position: relative; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 0.5rem; }
-        .f-form::after { content: ''; position: absolute; bottom: -1px; left: 0; width: 0%; height: 2px; background: var(--accent-gold); transition: width 0.4s cubic-bezier(0.19, 1, 0.22, 1); }
+        .f-form::after { content: ''; position: absolute; bottom: -1px; left: 0; width: 0%; height: 2px; background: var(--accent-gold); transition: width 0.4s ease; }
         .f-form:focus-within::after { width: 100%; }
         .f-input { flex: 1; background: transparent; border: none; color: var(--off-white); font-family: var(--font-primary); font-size: 1rem; font-weight: 500; outline: none; padding: 0.5rem 0; letter-spacing: 0.1em; }
         .f-input::placeholder { color: rgba(255,255,255,0.3); }
-        .f-submit { background: transparent; border: none; color: var(--off-white); font-size: 1.5rem; cursor: pointer; transition: color 0.3s, transform 0.3s; }
+        .f-submit { background: transparent; border: none; color: var(--off-white); font-size: 1.5rem; cursor: pointer; transition: 0.3s; }
         .f-submit:hover { color: var(--accent-gold); transform: translateX(5px); }
 
         .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 4rem; margin-bottom: 6rem; border-top: 1px solid var(--border-dark); padding-top: 4rem; }
         .f-col { display: flex; flex-direction: column; gap: 1.5rem; }
         .f-col-title { font-family: var(--font-tech); font-size: 0.7rem; font-weight: 700; color: var(--accent-gold); letter-spacing: 0.2em; margin-bottom: 0.5rem; }
-        .f-link { font-size: 0.85rem; font-weight: 500; letter-spacing: 0.1em; opacity: 0.7; transition: opacity 0.3s, transform 0.3s, color 0.3s; width: fit-content; }
+        
+        .f-link { font-size: 0.85rem; font-weight: 500; letter-spacing: 0.1em; color: var(--off-white); opacity: 0.7; transition: opacity 0.3s, transform 0.3s, color 0.3s; width: fit-content; text-decoration: none; }
         .f-link:hover { opacity: 1; color: var(--accent-gold); transform: translateX(5px); }
+        
         .f-text { font-family: var(--font-tech); font-size: 0.75rem; line-height: 1.8; opacity: 0.6; letter-spacing: 0.1em; }
 
         .footer-bottom { display: flex; justify-content: space-between; align-items: flex-end; border-top: 1px solid var(--border-dark); padding-top: 2rem; font-family: var(--font-tech); font-size: 0.65rem; letter-spacing: 0.15em; opacity: 0.6; }
@@ -268,12 +260,8 @@
         .ascend-btn:hover { color: var(--accent-gold); }
         .ascend-btn:hover .ascend-line { height: 60px; background: var(--accent-gold); }
 
-        /* Scroll Reveal Utility */
-        .reveal-elem { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
-        .reveal-elem.is-visible { opacity: 1; transform: translateY(0); }
-
         /* =========================================
-           8. GLOBAL CYBER CART CSS
+           9. SLIDE-OUT CYBER CART
            ========================================= */
         .cart-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 9998; opacity: 0; pointer-events: none; transition: 0.4s; }
         .cart-overlay.open { opacity: 1; pointer-events: all; }
@@ -294,12 +282,18 @@
         .remove-item:hover { color: #ff4d4d; }
         .cart-footer { padding: 2rem; border-top: 1px solid rgba(255,255,255,0.1); background: var(--deep-earth); }
         .cart-total { display: flex; justify-content: space-between; font-family: var(--font-tech); font-size: 1.2rem; font-weight: 700; color: var(--off-white); margin-bottom: 1.5rem; }
-        .checkout-btn { background: var(--off-white); color: var(--deep-earth); width: 100%; border: none; height: 65px; font-family: var(--font-primary); font-weight: 800; letter-spacing: 0.15em; font-size: 0.85rem; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 10px; transition: 0.3s; text-decoration: none;}
-        .checkout-btn:hover { background: var(--accent-gold); }
+
+        /* Scroll Reveal Utility */
+        .reveal-elem { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+        .reveal-elem.is-visible { opacity: 1; transform: translateY(0); }
 
         /* =========================================
-           9. RESPONSIVE PERFECTION
+           10. RESPONSIVE PERFECTION
            ========================================= */
+        @media (max-width: 1200px) { 
+            .h-scroll-grid { grid-auto-columns: calc(33.333% - 0.66px); }
+            .vault-grid { grid-template-columns: repeat(3, 1fr); } 
+        }
         @media (max-width: 1024px) {
             .hero-frame { grid-template-columns: 1fr 1fr; }
             .nav-center { padding: 0 1rem; }
@@ -308,26 +302,19 @@
             
             .ed-header { flex-direction: column; align-items: flex-start; gap: 3rem; }
             .ed-countdown-box { align-items: flex-start; }
-            .ed-mockups { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 2rem; gap: 2rem; }
-            .ed-mockups::-webkit-scrollbar { display: none; }
-            .mockup-card { min-width: 300px; scroll-snap-align: start; flex-shrink: 0; }
-
-            .item-hoodie { grid-column: 1 / 13; }
-            .item-tee { grid-column: 1 / 13; margin-top: 0; }
-            .item-pants { grid-column: 1 / 13; margin-top: 0; }
-            .item-cap { grid-column: 1 / 7; margin-top: 0; }
-            .item-tote { grid-column: 7 / 13; margin-top: 0; }
             
+            .h-scroll-grid { grid-auto-columns: calc(50% - 0.5px); }
+
             .spotlight-container { grid-template-columns: 1fr; }
             .spotlight-visual { min-height: 500px; border-right: none; border-bottom: 1px solid var(--border-light); }
             .spotlight-content { padding: 4rem; }
             
+            .vault-grid { grid-template-columns: repeat(2, 1fr); }
             .footer-grid { grid-template-columns: 1fr 1fr; gap: 3rem; }
         }
 
         @media (max-width: 768px) {
             .hide-mobile { display: none; }
-            .menu-trigger { display: none; } 
             .main-nav { grid-template-columns: auto 1fr auto; padding: 0 1.5rem; }
             .nav-compartment { padding: 0; border: none !important; }
             .nav-logo-lockup { transform: scale(0.85); }
@@ -336,31 +323,25 @@
             .hero-frame { grid-template-columns: 1fr; height: auto; border: none; }
             .hero-visual { height: 45vh; border-right: none; border-bottom: 1px solid var(--border-light); }
             .hero-content-panel { padding: 2rem 1.5rem; }
-            .hero-display { font-size: 2.8rem; margin-bottom: 1rem; }
-            .hero-manifesto { font-size: 0.95rem; margin-bottom: 2rem; }
-            .cyber-btn { max-width: 100%; }
-
+            .hero-display { font-size: 2.5rem; margin-bottom: 1rem; }
+            
             .easter-drop-section { padding: 4rem 1.5rem; }
             .ed-title { font-size: 2.8rem; }
             .countdown-wrapper { gap: 0.8rem; justify-content: flex-start; width: 100%; }
             .t-num { font-size: 2.5rem; }
             .t-sep { font-size: 1.5rem; }
-            .mockup-card { min-width: 80vw; }
             
-            .exhibition-section { padding: 3rem 1.5rem; }
-            .exhibition-title { font-size: 2.8rem; }
-            .exhibition-grid { display: flex; flex-direction: column; gap: 3rem; padding-bottom: 2rem; }
-            .artifact-visual { aspect-ratio: 4/5 !important; }
+            /* Responsive horizontal scroll for Easter Grid */
+            .h-scroll-grid { grid-auto-columns: 85%; }
 
             .spotlight-section { padding: 4rem 1.5rem; }
             .spotlight-visual { height: 50vh; min-height: auto; }
             .hud-frame { inset: 1rem; }
             .spotlight-content { padding: 3rem 1.5rem; }
             .s-title { font-size: 3rem; }
-            .s-specs li { flex-direction: column; align-items: flex-start; gap: 5px; }
-            .spec-value { text-align: left; max-width: 100%; }
-            .spotlight-btn { max-width: 100%; padding-left: 1.5rem; }
-            .s-btn-icon { width: 60px; }
+
+            .vault-section { padding: 4rem 1.5rem; }
+            .vault-grid { grid-template-columns: 1fr; }
 
             .elite-footer { padding: 4rem 1.5rem 2rem; }
             .footer-watermark { display: none; } 
@@ -380,15 +361,12 @@
     <header class="elite-header">
         <div class="utility-bar">
             <div class="util-left">DESIGNED IN LAGOS, NIGERIA</div>
-            <div class="util-center">COMPLIMENTARY SHIPPING ON COLLECTION 001</div>
-            <div class="util-right">
-                <a href="#" class="bag-link" onclick="toggleCart(); event.preventDefault();" style="color: inherit; text-decoration: none;">VIEW BAG</a>
-            </div>
+            <div class="util-center">COMPLIMENTARY SHIPPING ON EASTER CAPSULE</div>
+            <div class="util-right"></div>
         </div>
 
         <nav class="main-nav">
             <div class="nav-compartment nav-left">
-                <button class="menu-trigger"><span class="menu-line"></span><span class="menu-line"></span></button>
                 <a href="products.html" class="nav-icon-link" aria-label="Shop Archive">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
@@ -418,38 +396,38 @@
     <section class="hero-architectural">
         <div class="hero-frame">
             <div class="hero-visual">
-                <img src="https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?q=80&w=2000&auto=format&fit=crop" id="parallax-bg" alt="Rooted Campaign">
+                <img src="https://images.unsplash.com/photo-1580136608260-4ebf1f4b2317?q=80&w=2000&auto=format&fit=crop" id="parallax-bg" alt="Zulu Artcraft Pattern">
             </div>
             
             <div class="hero-content-panel">
-                <div class="collection-badge">COLLECTION 001</div>
-                <h1 class="hero-display">WEAR<br>YOUR<br>FAITH.</h1>
+                <div class="collection-badge">FAITH × CULTURE</div>
+                <h1 class="hero-display">WEAR<br>YOUR<br>BELIEF.</h1>
                 <p class="hero-manifesto">Rooted exists to redefine how faith is represented in fashion. Modern, unapologetic, and deeply grounded in African heritage.</p>
                 
-                <a href="products.html" class="cyber-btn">
+                <a href="#easter" class="master-btn gold-mode">
                     <div class="btn-corner tl"></div><div class="btn-corner tr"></div>
                     <div class="btn-corner bl"></div><div class="btn-corner br"></div>
-                    <div class="cyber-bg"></div>
-                    <div class="cyber-text-wrap">
-                        <div class="cyber-text-row">ENTER THE ARCHIVE</div>
-                        <div class="cyber-text-row hover-text">SHOP NOW <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-left: 5px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+                    <div class="mb-bg"></div>
+                    <div class="mb-text-wrap">
+                        <div class="mb-text-row">ENTER THE ARCHIVE</div>
+                        <div class="mb-text-row hover-text">SHOP EASTER DROP <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-left: 5px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
                     </div>
                 </a>
             </div>
         </div>
     </section>
 
-    <section class="easter-drop-section reveal-elem">
+    <section id="easter" class="easter-drop-section reveal-elem">
         <div class="ed-container">
             <div class="ed-header">
                 <div class="ed-title-box">
-                    <div class="status-pulse dark-pulse"><div class="pulse-dot"></div> PRE-ORDER OPEN</div>
+                    <div class="status-pulse dark-pulse"><div class="pulse-dot"></div> PRE-ORDER SECUREMENT</div>
                     <h2 class="ed-title">THE RESURRECTION<br><span>EASTER DROP 001</span></h2>
                     <p class="ed-desc">A highly curated capsule of 5 heavyweight graphic tees marking the Easter launch. Secure your allocation before the archive locks for production and final delivery.</p>
                 </div>
                 
                 <div class="ed-countdown-box">
-                    <span class="ed-cd-label">PRE-ORDER WINDOW CLOSES IN:</span>
+                    <span class="ed-cd-label">SECUREMENT WINDOW CLOSES IN:</span>
                     <div class="countdown-wrapper light-mode">
                         <div class="time-block"><span class="t-num" id="cd-days">00</span><span class="t-label">DAYS</span></div><span class="t-sep">:</span>
                         <div class="time-block"><span class="t-num" id="cd-hours">00</span><span class="t-label">HRS</span></div><span class="t-sep">:</span>
@@ -459,150 +437,79 @@
                 </div>
             </div>
 
-            <div class="ed-mockups">
-                <a href="product.html?id=rt-006" class="mockup-card">
+            <div class="h-scroll-grid">
+                <a href="product.html?id=rt-007" class="mockup-card">
                     <div class="mockup-visual">
-                        <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=800&auto=format&fit=crop" alt="Tee Mockup 1">
+                        <img src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?q=80&w=800&auto=format&fit=crop" alt="Tee Mockup 2">
+                        <div class="mockup-mask"><span class="mockup-mask-text">SHOP NOW</span></div>
                     </div>
                     <div class="mockup-meta">
-                        <span class="m-id">CAPSULE 01</span>
+                        <span class="m-id" style="color: var(--deep-earth);">CAPSULE 01</span>
                         <h4 class="m-name">THE GOSPEL TEE</h4>
-                        <span class="m-action">PRE-ORDER ALLOCATION</span>
+                        <span class="m-action" style="color: var(--deep-earth);">SECURE ALLOCATION</span>
                     </div>
                 </a>
 
                 <a href="product.html?id=rt-007" class="mockup-card">
                     <div class="mockup-visual">
                         <img src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?q=80&w=800&auto=format&fit=crop" alt="Tee Mockup 2">
+                        <div class="mockup-mask"><span class="mockup-mask-text">SHOP NOW</span></div>
                     </div>
                     <div class="mockup-meta">
-                        <span class="m-id">CAPSULE 02</span>
+                        <span class="m-id" style="color: var(--deep-earth);">CAPSULE 02</span>
                         <h4 class="m-name">FAITH NOIR TEE</h4>
-                        <span class="m-action">PRE-ORDER ALLOCATION</span>
+                        <span class="m-action" style="color: var(--deep-earth);">SECURE ALLOCATION</span>
                     </div>
                 </a>
 
                 <a href="product.html?id=rt-008" class="mockup-card">
                     <div class="mockup-visual">
                         <img src="https://images.unsplash.com/photo-1576566588028-4147f3842f27?q=80&w=800&auto=format&fit=crop" alt="Tee Mockup 3">
+                        <div class="mockup-mask"><span class="mockup-mask-text">SHOP NOW</span></div>
                     </div>
                     <div class="mockup-meta">
-                        <span class="m-id">CAPSULE 03</span>
+                        <span class="m-id" style="color: var(--deep-earth);">CAPSULE 03</span>
                         <h4 class="m-name">HERITAGE BLANC</h4>
-                        <span class="m-action">PRE-ORDER ALLOCATION</span>
+                        <span class="m-action" style="color: var(--deep-earth);">SECURE ALLOCATION</span>
                     </div>
                 </a>
 
                 <a href="product.html?id=rt-009" class="mockup-card">
                     <div class="mockup-visual">
                         <img src="https://images.unsplash.com/photo-1503342394128-c104d54dba01?q=80&w=800&auto=format&fit=crop" alt="Tee Mockup 4">
+                        <div class="mockup-mask"><span class="mockup-mask-text">SHOP NOW</span></div>
                     </div>
                     <div class="mockup-meta">
-                        <span class="m-id">CAPSULE 04</span>
+                        <span class="m-id" style="color: var(--deep-earth);">CAPSULE 04</span>
                         <h4 class="m-name">SCRIPTURE CORE</h4>
-                        <span class="m-action">PRE-ORDER ALLOCATION</span>
+                        <span class="m-action" style="color: var(--deep-earth);">SECURE ALLOCATION</span>
                     </div>
                 </a>
 
                 <a href="product.html?id=rt-010" class="mockup-card">
                     <div class="mockup-visual">
                         <img src="https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?q=80&w=800&auto=format&fit=crop" alt="Tee Mockup 5">
+                        <div class="mockup-mask"><span class="mockup-mask-text">SHOP NOW</span></div>
                     </div>
                     <div class="mockup-meta">
-                        <span class="m-id">CAPSULE 05</span>
+                        <span class="m-id" style="color: var(--deep-earth);">CAPSULE 05</span>
                         <h4 class="m-name">ARCHIVE ESSENTIAL</h4>
-                        <span class="m-action">PRE-ORDER ALLOCATION</span>
+                        <span class="m-action" style="color: var(--deep-earth);">SECURE ALLOCATION</span>
                     </div>
                 </a>
             </div>
 
             <div class="ed-footer">
-                <a href="products.html#easter" class="dark-btn">
-                    <span class="btn-text">PRE-ORDER COLLECTION</span>
-                    <span class="btn-arrow">→</span>
+                <a href="products.html#easter" class="master-btn dark-mode">
+                    <div class="btn-corner tl"></div><div class="btn-corner tr"></div>
+                    <div class="btn-corner bl"></div><div class="btn-corner br"></div>
+                    <div class="mb-bg"></div>
+                    <div class="mb-text-wrap">
+                        <div class="mb-text-row">EXPLORE EASTER CAPSULE</div>
+                        <div class="mb-text-row hover-text">VIEW ALL <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-left: 5px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+                    </div>
                 </a>
             </div>
-        </div>
-    </section>
-
-    <section class="exhibition-section" id="about">
-        <div class="exhibition-header reveal-elem">
-            <div class="header-line"></div>
-            <div class="header-meta">
-                <span></span>
-                <span>CURATED ARTIFACTS</span>
-            </div>
-            <h2 class="exhibition-title">LATEST<br>REVELATIONS</h2>
-        </div>
-
-        <div class="exhibition-grid">
-            
-            <div class="artifact-card item-hoodie disabled reveal-elem">
-                <div class="artifact-visual">
-                    <span class="status-badge badge-archived">COMING SOON</span>
-                    <img src="https://images.unsplash.com/photo-1578681994506-b8f463449011?q=80&w=1000&auto=format&fit=crop" class="parallax-img" alt="Covenant Hoodie">
-                    </div>
-                <div class="artifact-data">
-                    <div class="data-top"><span class="a-sku">CAT: APPAREL</span><span class="a-price">₦45,000</span></div>
-                    <h3 class="a-name">THE COVENANT HOODIE</h3>
-                    <p class="a-tech">340GSM FRENCH TERRY // BOLD DECLARATION</p>
-                </div>
-            </div>
-
-            <a href="product.html?id=rt-002" class="artifact-card item-tee reveal-elem">
-                <div class="artifact-visual">
-                    <img src="https://images.unsplash.com/photo-1529139574466-a302d2d39ca2?q=80&w=1000&auto=format&fit=crop" class="parallax-img" alt="Heritage Tee">
-                    <div class="visual-mask"><span class="mask-text">SHOP NOW</span></div>
-                </div>
-                <div class="artifact-data">
-                    <div class="data-top"><span class="a-sku">CAT: APPAREL</span><span class="a-price">₦25,000</span></div>
-                    <h3 class="a-name">HERITAGE TEE</h3>
-                    <p class="a-tech">VINTAGE WASH // STREET SILHOUETTE</p>
-                </div>
-            </a>
-
-            <div class="artifact-card item-pants disabled reveal-elem">
-                <div class="artifact-visual">
-                    <span class="status-badge badge-archived">COMING SOON</span>
-                    <img src="https://images.unsplash.com/photo-1584030373081-f37b7bb4fa8e?q=80&w=1500&auto=format&fit=crop" class="parallax-img" alt="African Trousers">
-                </div>
-                <div class="artifact-data">
-                    <div class="data-top"><span class="a-sku">CAT: BOTTOMS</span><span class="a-price">₦35,000</span></div>
-                    <h3 class="a-name">CULTURAL CARGO PANTS</h3>
-                    <p class="a-tech">WOVEN HERITAGE TEXTILE // WIDE LEG FIT</p>
-                </div>
-            </div>
-
-            <div class="artifact-card item-cap disabled reveal-elem">
-                <div class="artifact-visual">
-                    <span class="status-badge badge-archived">COMING SOON</span>
-                    <img src="https://images.unsplash.com/photo-1588850561407-ed78c282e89b?q=80&w=1000&auto=format&fit=crop" class="parallax-img" alt="Builder's Cap">
-                </div>
-                <div class="artifact-data">
-                    <div class="data-top"><span class="a-sku">CAT: HEADWEAR</span><span class="a-price">₦12,000</span></div>
-                    <h3 class="a-name">BUILDER'S CAP</h3>
-                    <p class="a-tech">EARTH TONE // EMBROIDERED IDENTITY</p>
-                </div>
-            </div>
-
-            <div class="artifact-card item-tote disabled reveal-elem">
-                <div class="artifact-visual">
-                    <span class="status-badge badge-archived">COMING SOON</span>
-                    <img src="https://images.unsplash.com/photo-1597484661643-2f5fef640dd1?q=80&w=1000&auto=format&fit=crop" class="parallax-img" alt="Structure Tote">
-                </div>
-                <div class="artifact-data">
-                    <div class="data-top"><span class="a-sku">CAT: ACCESSORIES</span><span class="a-price">₦15,000</span></div>
-                    <h3 class="a-name">STRUCTURE TOTE</h3>
-                    <p class="a-tech">HEAVY CANVAS // EVERYDAY CARRY</p>
-                </div>
-            </div>
-        </div>
-        
-        <div class="exhibition-footer reveal-elem" style="display: flex; justify-content: center; padding-top: 4rem;">
-            <a href="products.html" class="dark-btn">
-                <span class="btn-text">EXPLORE FULL ARCHIVE</span>
-                <span class="btn-arrow">→</span>
-            </a>
         </div>
     </section>
 
@@ -614,16 +521,17 @@
                     <span class="crosshair bl"></span><span class="crosshair br"></span>
                     <div class="scan-line"></div>
                     <div class="hud-status">
-                        <!-- <span class="pulse-dot" style="animation: pulseLight 1s infinite;"></span> TARGET ACQUIRED // 002 -->
+                        <!-- <span class="pulse-dot" style="animation: pulseLight 1s infinite;"></span> TARGET ACQUIRED // 006 -->
                     </div>
                 </div>
-                <img src="https://images.unsplash.com/photo-1529139574466-a302d2d39ca2?q=80&w=1200&auto=format&fit=crop" class="spotlight-img" alt="Heritage Tee Focus">
+                <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=1200&auto=format&fit=crop" class="spotlight-img" alt="The Gospel Tee Focus">
             </div>
 
             <div class="spotlight-content">
                 <div class="s-meta">FLAGSHIP SPOTLIGHT</div>
-                <h2 class="s-title">HERITAGE<br>TEE.</h2>
-                <p class="s-desc" style="margin-bottom: 2rem;">Heavyweight vintage wash featuring the ROOTED coordinate stamp on the spine. A structured silhouette built for the modern builder.</p>
+                <h2 class="s-title">THE<br>GOSPEL<br>TEE.</h2>
+                <div class="s-price">₦10,000</div>
+                <p class="s-desc" style="margin-bottom: 2rem;">Exclusive Easter allocation. Graphic depiction of the resurrection protocol printed on heavyweight, oversized cotton. Built to outlast the season.</p>
 
                 <div class="size-selector">
                     <span class="s-label">SELECT SPECIFICATION (SIZE)</span>
@@ -637,17 +545,85 @@
                 </div>
 
                 <ul class="s-specs">
-                    <li><span class="spec-label">FABRIC WEIGHT</span><span class="spec-value">280GSM</span></li>
-                    <li><span class="spec-label">SILHOUETTE</span><span class="spec-value">RELAXED / BOXY</span></li>
-                    <li><span class="spec-label">TECHNIQUE</span><span class="spec-value">ACID WASH</span></li>
+                    <li><span class="spec-label">FABRIC WEIGHT</span><span class="spec-value">240GSM</span></li>
+                    <li><span class="spec-label">SILHOUETTE</span><span class="spec-value">OVERSIZED / DROPPED SHOULDER</span></li>
+                    <li><span class="spec-label">TECHNIQUE</span><span class="spec-value">HIGH-DENSITY SCREEN PRINT</span></li>
                 </ul>
 
-                <button class="spotlight-btn" onclick="addSpotlightToCart()">
-                    <span class="s-btn-text">BUY NOW</span>
-                    <div class="s-btn-icon">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                <button class="master-btn gold-mode full-width" onclick="addSpotlightToCart()">
+                    <div class="btn-corner tl"></div><div class="btn-corner tr"></div>
+                    <div class="btn-corner bl"></div><div class="btn-corner br"></div>
+                    <div class="mb-bg"></div>
+                    <div class="mb-text-wrap">
+                        <div class="mb-text-row">SHOP NOW</div>
+                        <div class="mb-text-row hover-text">ADD TO BAG +</div>
                     </div>
                 </button>
+            </div>
+        </div>
+    </section>
+
+    <section class="vault-section" id="about">
+        <div class="vault-header reveal-elem">
+            <h2 class="vault-title">THE VAULT</h2>
+            <div class="vault-desc">UPCOMING REVELATIONS // IN DEVELOPMENT</div>
+        </div>
+
+        <div class="vault-grid reveal-elem">
+            
+            <div class="vault-item">
+                <span class="status-badge locked">COMING SOON</span>
+                <div class="item-visual">
+                    <img src="https://images.unsplash.com/photo-1578681994506-b8f463449011?q=80&w=1000&auto=format&fit=crop" class="item-img" alt="Covenant Hoodie">
+                </div>
+                <div class="vault-data">
+                    <div class="v-top-row"><span class="v-sku">CAT: APPAREL</span></div>
+                    <h3 class="v-name">THE COVENANT HOODIE</h3>
+                </div>
+            </div>
+            
+            <div class="vault-item">
+                <span class="status-badge locked">COMING SOON</span>
+                <div class="item-visual">
+                    <img src="https://images.unsplash.com/photo-1529139574466-a302d2d39ca2?q=80&w=1000&auto=format&fit=crop" class="item-img" alt="Heritage Tee">
+                </div>
+                <div class="vault-data">
+                    <div class="v-top-row"><span class="v-sku">CAT: APPAREL</span></div>
+                    <h3 class="v-name">HERITAGE TEE - ONYX</h3>
+                </div>
+            </div>
+
+            <div class="vault-item">
+                <span class="status-badge locked">COMING SOON</span>
+                <div class="item-visual">
+                    <img src="https://images.unsplash.com/photo-1584030373081-f37b7bb4fa8e?q=80&w=1500&auto=format&fit=crop" class="item-img" alt="African Trousers">
+                </div>
+                <div class="vault-data">
+                    <div class="v-top-row"><span class="v-sku">CAT: BOTTOMS</span></div>
+                    <h3 class="v-name">CULTURAL CARGO PANTS</h3>
+                </div>
+            </div>
+
+            <div class="vault-item">
+                <span class="status-badge locked">COMING SOON</span>
+                <div class="item-visual">
+                    <img src="https://images.unsplash.com/photo-1588850561407-ed78c282e89b?q=80&w=1000&auto=format&fit=crop" class="item-img" alt="Builder's Cap">
+                </div>
+                <div class="vault-data">
+                    <div class="v-top-row"><span class="v-sku">CAT: HEADWEAR</span></div>
+                    <h3 class="v-name">BUILDER'S CAP</h3>
+                </div>
+            </div>
+
+            <div class="vault-item">
+                <span class="status-badge locked">COMING SOON</span>
+                <div class="item-visual">
+                    <img src="https://images.unsplash.com/photo-1597484661643-2f5fef640dd1?q=80&w=1000&auto=format&fit=crop" class="item-img" alt="Structure Tote">
+                </div>
+                <div class="vault-data">
+                    <div class="v-top-row"><span class="v-sku">CAT: ACCESSORIES</span></div>
+                    <h3 class="v-name">STRUCTURE TOTE</h3>
+                </div>
             </div>
         </div>
     </section>
@@ -667,14 +643,14 @@
 
             <div class="footer-grid reveal-elem">
                 <div class="f-col">
-                    <span class="f-col-title">HQ // COORD</span>
-                    <p class="f-text">LAGOS, NIGERIA<br>06°27'11"N 03°23'45"E</p>
+                    <span class="f-col-title">HQ</span>
+                    <p class="f-text">IBADAN, NIGERIA<br></p>
                     <p class="f-text" style="margin-top:1rem; color:var(--accent-gold);">FAITH × CULTURE</p>
                 </div>
                 <div class="f-col">
                     <span class="f-col-title">EXPLORE</span>
                     <a href="products.html" class="f-link">THE ARCHIVE</a>
-                    <a href="#about" class="f-link">THE MOVEMENT</a>
+                    <a href="index.html#about" class="f-link">THE MOVEMENT</a>
                     <a href="#" class="f-link">JOURNAL</a>
                 </div>
                 <div class="f-col">
@@ -714,7 +690,15 @@
                 <span>TOTAL</span>
                 <span id="cart-total-price">₦0</span>
             </div>
-            <a href="checkout.html" class="checkout-btn">PROCEED TO CHECKOUT →</a>
+            <a href="checkout.html" class="master-btn gold-mode full-width">
+                <div class="btn-corner tl"></div><div class="btn-corner tr"></div>
+                <div class="btn-corner bl"></div><div class="btn-corner br"></div>
+                <div class="mb-bg"></div>
+                <div class="mb-text-wrap">
+                    <div class="mb-text-row">PROCEED TO CHECKOUT →</div>
+                    <div class="mb-text-row hover-text">SECURE ARTIFACTS</div>
+                </div>
+            </a>
         </div>
     </div>
 
@@ -764,7 +748,7 @@
                     document.getElementById('cd-hours').innerText = "00";
                     document.getElementById('cd-mins').innerText = "00";
                     document.getElementById('cd-secs').innerText = "00";
-                    document.querySelector('.status-pulse').innerHTML = `<div class="pulse-dot" style="background: #ff4d4d;"></div> PRE-ORDER CLOSED`;
+                    document.querySelector('.status-pulse').innerHTML = `<div class="pulse-dot" style="background: #ff4d4d;"></div> ALLOCATIONS SECURED`;
                     return;
                 }
 
@@ -782,7 +766,7 @@
         });
 
         // =========================================
-        // SPOTLIGHT HOMEPAGE ORDER LOGIC (UPDATED TO TEE)
+        // SPOTLIGHT HOMEPAGE ORDER LOGIC (THE GOSPEL TEE)
         // =========================================
         let spotlightSize = null;
 
@@ -798,14 +782,14 @@
                 return;
             }
 
-            // Since the spotlight is now the Tee, this matches the db entry for the Tee
+            // Flagship Product set to "THE GOSPEL TEE" (Easter Capsule)
             const flagshipProduct = {
-                id: 'rt-002',
-                name: 'HERITAGE TEE',
-                price: 25000,
-                category: 'APPAREL',
-                tech: 'VINTAGE WASH',
-                images: ['https://images.unsplash.com/photo-1529139574466-a302d2d39ca2?q=80&w=1200&auto=format&fit=crop']
+                id: 'rt-006',
+                name: 'THE GOSPEL TEE',
+                price: 28000,
+                category: 'EASTER CAPSULE',
+                tech: 'OVERSIZED 240GSM',
+                images: ['https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=1200&auto=format&fit=crop']
             };
 
             const existingItem = globalCart.find(item => item.id === flagshipProduct.id && item.size === spotlightSize);
@@ -824,7 +808,6 @@
             spotlightSize = null;
             document.querySelectorAll('.spot-size-btn').forEach(b => b.classList.remove('active'));
         }
-
 
         // =========================================
         // GLOBAL CART LOGIC
